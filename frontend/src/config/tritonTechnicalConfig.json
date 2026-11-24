@@ -1,0 +1,280 @@
+{
+  "identity": {
+    "product": "TRITON",
+    "fullName": "TRITON – Autonomous Underwater Vehicle",
+    "platform": "Autonomous Underwater Vehicle (AUV)",
+    "institution": "Team Triton",
+    "team": "Team Triton",
+    "tagline": "BUILT FOR THE OCEAN. ENGINEERED FOR IMPACT.",
+    "brandStatement": "EXPLORE. NAVIGATE. ACCOMPLISH.",
+    "visionStatement": "To develop an intelligent and reliable underwater robotic platform capable of supporting underwater exploration, inspection, surveying, and object-retrieval operations.",
+    "description": "An advanced underwater robotic platform developed by Team Triton, integrating precision propulsion, embedded control, intelligent perception, and mission-oriented autonomy for underwater inspection, surveying, and object-retrieval operations.",
+    "audience": [
+      "Potential investors",
+      "Corporate sponsors",
+      "Marine engineering organisations",
+      "Research institutions",
+      "Technical collaborators",
+      "Government and defence-related organisations"
+    ]
+  },
+  "specifications": {
+    "thrusterCount": 8,
+    "degreesOfFreedom": 6,
+    "horizontalThrusters": 4,
+    "verticalThrusters": 4,
+    "horizontalConfiguration": "4 horizontal vectored thrusters mounted at 45° corner angles",
+    "verticalConfiguration": "4 vertical fixed thrusters with 182.60 mm longitudinal spacing",
+    "battery": "3S LiPo",
+    "batteryCapacity": "22,000 mAh",
+    "operatingDepth": "Approximately 2 m",
+    "operatingDepthNum": 2.0,
+    "missionTime": "More than 20 Minutes",
+    "missionTimeNum": 20,
+    "vehicleWeight": "Approximately 22 kg",
+    "vehicleWeightNum": 22.0,
+    "dimensionsPoster": {
+      "lengthMm": 482.6,
+      "widthMm": 331.0,
+      "heightMm": 262.0,
+      "display": "482.6 × 331 × 262 mm (L × W × H)"
+    },
+    "dimensionsDrawing": {
+      "frameLengthMm": 482.60,
+      "frameWidthOuterMm": 331.02,
+      "frameWidthInnerMm": 319.02,
+      "totalHeightMm": 262.52,
+      "thrusterEnvelopeSpanMm": 582.70,
+      "thrusterTransverseSpanMm": 406.64,
+      "pressureHullOdMm": 114.30,
+      "pressureHullRadiusMm": 57.15,
+      "pressureHullLengthMm": 443.22,
+      "buoyancyTubeLengthMm": 400.00,
+      "cameraAngleDeg": 39.23,
+      "verticalThrusterSpacingMm": 182.60,
+      "plateThicknessMm": 6.00
+    },
+    "dimensionDiscrepancyNote": "The project poster lists dimensions as 482.6 × 331 × 262 mm, which defines the main structural chassis envelope. The engineering CAD drawing details a 582.70 mm outer dimension, which represents the total diagonal envelope spanning across the outermost angled corner thruster assemblies. This distinction is flagged for engineering confirmation and clarity."
+  },
+  "propulsion": {
+    "totalThrusters": 8,
+    "degreesOfFreedom": 6,
+    "dofBreakdown": {
+      "horizontal": [
+        { "name": "Surge", "motion": "Longitudinal forward and reverse motion", "thrusters": "4 vectored corner thrusters in parallel" },
+        { "name": "Sway", "motion": "Lateral port and starboard translation", "thrusters": "4 vectored corner thrusters in differential opposing pairs" },
+        { "name": "Yaw", "motion": "Heading rotation around vertical Z axis", "thrusters": "4 vectored corner thrusters in rotational torque pair" }
+      ],
+      "vertical": [
+        { "name": "Heave", "motion": "Vertical ascent and depth holding", "thrusters": "4 vertical thrusters running in unison" },
+        { "name": "Roll", "motion": "Port and starboard angular tilt stabilization", "thrusters": "Left vs right vertical thrusters running differentially" },
+        { "name": "Pitch", "motion": "Fore and aft trim incline stabilization", "thrusters": "Front vs rear vertical thrusters running differentially" }
+      ]
+    }
+  },
+  "power": {
+    "battery": "3S LiPo – 22,000 mAh",
+    "pdb": "Power Distribution Board with heavy-duty copper busbars",
+    "escs": "8 × 30A Electronic Speed Controllers (ESCs)",
+    "conversion": "UBEC / DC-DC Buck Conversion (5V & 12V Regulated Rails)",
+    "protection": [
+      "Hardware Magnetic Kill Switch for instantaneous manual shutdown",
+      "Leak-Triggered Autonomous Surface Failsafe",
+      "Low Battery Voltage Protection & Return Failsafe",
+      "EKF State Divergence Protection",
+      "Passive Positive Buoyancy for guaranteed surface retrieval",
+      "Hydrodynamic Thruster Guards preventing debris snagging"
+    ]
+  },
+  "hull": {
+    "type": "Transparent Cylindrical Pressure Hull",
+    "material": "High-grade optical acrylic / polycarbonate",
+    "outerDiameterMm": 114.30,
+    "lengthMm": 443.22,
+    "sealing": "Precision radial and face O-ring seals",
+    "penetrators": "Waterproof marine cable penetrators with potted epoxy",
+    "endCap": "Removable CNC aluminum / Delrin end cap with circular bolt pattern"
+  },
+  "control": {
+    "flightController": "Pixhawk 2.4.8",
+    "firmware": "ArduSub",
+    "companionComputer": "NVIDIA Jetson Orin Nano",
+    "telemetry": "MAVLink Communication (UART Serial / Companion Stream)",
+    "stabilisation": "Real-time EKF sensor fusion and PID closed-loop attitude stabilization",
+    "allocation": "6-DOF Thruster Allocation Matrix with individual PWM ESC command output"
+  },
+  "sensors": [
+    {
+      "id": "imu",
+      "name": "IMU",
+      "model": "ICM-20948",
+      "function": "9-Axis inertial measurement unit combining 3-axis accelerometer, 3-axis gyroscope, and internal compass for attitude and angular velocity estimation."
+    },
+    {
+      "id": "depth",
+      "name": "Depth Sensor",
+      "model": "Bar30",
+      "function": "High-resolution piezoresistive pressure sensor providing millimeter-level depth measurement and water temperature telemetry."
+    },
+    {
+      "id": "magnetometer",
+      "name": "Magnetometer",
+      "model": "RM3100",
+      "function": "High-precision geomagnetic compass sensor immune to drift, providing accurate magnetic heading reference."
+    },
+    {
+      "id": "leak",
+      "name": "Leak Sensor",
+      "model": "Optical/Conductivity Probe",
+      "function": "Internal moisture probe placed at the lowest point of the pressure hull, instantly triggering surfacing sequence upon water ingress."
+    },
+    {
+      "id": "temp",
+      "name": "Temperature Sensor",
+      "model": "Internal Thermal Monitor",
+      "function": "Monitors internal electronics enclosure ambient temperature to protect compute and power components."
+    },
+    {
+      "id": "front_cam",
+      "name": "Front Camera",
+      "model": "Low-Light HD Camera",
+      "function": "Forward-facing visual inspection camera providing real-time feed for YOLOv11 target detection and gate transit."
+    },
+    {
+      "id": "down_cam",
+      "name": "Downward Camera",
+      "model": "Wide-Angle HD Camera (39.23°)",
+      "function": "Downward-angled camera for seafloor tracking, pipeline following, bathymetric surveying, and seabed marker identification."
+    },
+    {
+      "id": "hydrophones",
+      "name": "Three-Hydrophone Array",
+      "model": "40 kHz Acoustic Array",
+      "function": "Triangular acoustic hydrophone array calculating Time Difference of Arrival (TDoA) to locate submerged acoustic pingers."
+    }
+  ],
+  "ai": {
+    "model": "YOLOv11",
+    "updateNote": "Upgraded to YOLOv11 deep neural network object detection from previous YOLOv8 Nano architecture.",
+    "edgeCompute": "NVIDIA Jetson Orin Nano",
+    "preprocessing": [
+      "OpenCV frame capture and RGB normalization",
+      "CLAHE (Contrast Limited Adaptive Histogram Equalization) for turbid water contrast enhancement",
+      "Dynamic White Balance correction to compensate for underwater red-wavelength light attenuation",
+      "Resolution optimization for high-throughput edge inference"
+    ],
+    "pipeline": [
+      "Camera Input",
+      "Image Preprocessing",
+      "YOLOv11 Inference",
+      "Object Detection and Classification",
+      "Target Identification",
+      "Mission Decision Logic",
+      "Control / Mission Execution"
+    ],
+    "demoDisclaimer": "Object detection demonstrations in this application utilize Robosub benchmark footage, pool qualification recordings, and visual simulations. Real model weights are benchmarked for competition gate transit."
+  },
+  "missions": {
+    "objectives": [
+      {
+        "id": "ships",
+        "title": "Inspection of ships and structures",
+        "points": ["Hull inspection", "Damage assessment", "Underwater surveys"]
+      },
+      {
+        "id": "pipelines",
+        "title": "Pipeline and cable inspection",
+        "points": ["Pipeline monitoring", "Cable inspection", "Connection inspection"]
+      },
+      {
+        "id": "surveys",
+        "title": "Data collection and survey",
+        "points": ["High-resolution data collection", "Underwater analysis", "Mapping"]
+      },
+      {
+        "id": "retrieval",
+        "title": "Collecting underwater objects",
+        "points": ["Sample retrieval", "Lost equipment recovery", "Debris collection"]
+      },
+      {
+        "id": "operations",
+        "title": "Supporting underwater operations",
+        "points": ["Maintenance support", "Intervention tasks"]
+      }
+    ],
+    "operatingModes": [
+      {
+        "mode": "MODE 1",
+        "title": "INSPECTION",
+        "description": "Inspection of ships, structures, pipelines, and marine assets with high-resolution visual and depth telemetry."
+      },
+      {
+        "mode": "MODE 2",
+        "title": "SURVEY",
+        "description": "Large-area mapping, underwater inspection surveys, and environmental data collection across GPS-denied aquatic zones."
+      },
+      {
+        "mode": "MODE 3",
+        "title": "MINING / OBJECT RETRIEVAL",
+        "description": "Locate, identify, grasp, and collect underwater objects, scientific samples, and submerged equipment."
+      }
+    ],
+    "capabilities": [
+      { "name": "Gate Transit", "category": "Navigation", "status": "Benchmarked in YOLOv11 testing", "desc": "Autonomous detection, trajectory planning, and alignment through underwater qualification gates." },
+      { "name": "Waypoint Navigation", "category": "Control", "status": "Demonstrated via ArduSub", "desc": "Dead reckoning navigation combining IMU, depth, and compass for accurate 3D waypoint execution." },
+      { "name": "Object Detection", "category": "Perception", "status": "Active in YOLOv11 pipeline", "desc": "Real-time edge classification of underwater markers, gates, buoys, and simulated debris." },
+      { "name": "Acoustic Localisation", "category": "Acoustics", "status": "Architecture designed / 40 kHz", "desc": "Acoustic pinger triangulation via TDoA to home in on underwater target transmitters." },
+      { "name": "Task Execution", "category": "Autonomy", "status": "Under active development", "desc": "Mission decision state machine executing sequential inspection and station-keeping protocols." },
+      { "name": "Return to Start", "category": "Failsafe", "status": "Implemented", "desc": "Reverse path retracing and emergency positive-buoyancy surfacing upon timeout or critical voltage." }
+    ]
+  },
+  "sponsorship": {
+    "heading": "ENGINEER THE FUTURE BENEATH THE SURFACE.",
+    "supportingMessage": "Partner with Team Triton to support the development of intelligent underwater robotics and contribute to the next generation of marine engineering innovation.",
+    "whyPartner": [
+      "Support student-led engineering innovation.",
+      "Contribute to underwater robotics development.",
+      "Enable hardware and component development.",
+      "Support fabrication and testing.",
+      "Encourage practical engineering education.",
+      "Create technical collaboration opportunities."
+    ],
+    "categories": [
+      {
+        "id": "hardware",
+        "title": "Hardware and Component Sponsorship",
+        "desc": "Contribution of brushless underwater thrusters, 30A ESCs, high-discharge 3S LiPo battery packs, waterproof penetrators, and O-ring sealing hardware."
+      },
+      {
+        "id": "financial",
+        "title": "Financial Sponsorship",
+        "desc": "Direct monetary sponsorship to fund material procurement, water tank test facility rentals, specialized tooling, and competition entry logistics."
+      },
+      {
+        "id": "technology",
+        "title": "Technology and Computing Support",
+        "desc": "Providing embedded AI compute boards (NVIDIA Jetson series), GPU training compute credits, development licenses, and underwater vision hardware."
+      },
+      {
+        "id": "manufacturing",
+        "title": "Manufacturing and Fabrication Support",
+        "desc": "Support for precision CNC milling of aluminum chassis plates, acrylic lathe turning for pressure hull tubes, waterjet cutting, and hard anodization."
+      },
+      {
+        "id": "collaboration",
+        "title": "Research and Technical Collaboration",
+        "desc": "Joint engineering research, mentorship from senior marine roboticists, access to oceanographic testbeds, and academic collaboration programs."
+      }
+    ],
+    "mainCta": "LET'S BUILD THE FUTURE OF UNDERWATER EXPLORATION TOGETHER."
+  },
+  "contact": {
+    "person": "ASHOK",
+    "phone": "98844 69962",
+    "internationalFormat": "+91 98844 69962",
+    "phoneUri": "tel:+919884469962",
+    "whatsappNumber": "919884469962",
+    "whatsappUri": "https://wa.me/919884469962",
+    "footerText": "TRITON – AUTONOMOUS UNDERWATER VEHICLE\nTEAM TRITON\nTEAM TRITON\nBUILT FOR THE OCEAN. ENGINEERED FOR IMPACT.\nASHOK – +91 98844 69962"
+  }
+}

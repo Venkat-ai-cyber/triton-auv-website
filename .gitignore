@@ -1,0 +1,12 @@
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.DS_Store
+*.log
+.env
+__pycache__/
+*.pyc
+prompt_extracted.txt
+gillianjack.html
+inspect_gillian*.py

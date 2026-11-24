@@ -1,0 +1,153 @@
+﻿# -*- coding: utf-8 -*-
+import os, fitz, shutil
+
+poster_dir = r"C:\Users\su\.gemini\antigravity\scratch\triton-auv-website\frontend\public\assets\images\poster"
+os.makedirs(poster_dir, exist_ok=True)
+
+svg_path = os.path.join(poster_dir, "triton_project_poster.svg")
+with open(svg_path, "w", encoding="utf-8") as f:
+    f.write("""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="1200" height="1600">
+  <defs>
+    <linearGradient id="oceanBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#061B2B" />
+      <stop offset="40%" stop-color="#092C46" />
+      <stop offset="100%" stop-color="#03101D" />
+    </linearGradient>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00D4FF" />
+      <stop offset="100%" stop-color="#26E6D1" />
+    </linearGradient>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C3452" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#072238" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="1600" fill="url(#oceanBg)" />
+  
+  <g transform="translate(80, 80)">
+    <text x="0" y="30" font-family="sans-serif" font-size="20" font-weight="bold" fill="#D7A747" letter-spacing="4">CHENNAI INSTITUTE OF TECHNOLOGY</text>
+    <text x="0" y="55" font-family="sans-serif" font-size="14" fill="#8BB9D4" letter-spacing="2">DEPARTMENT OF ROBOTICS &amp; ARTIFICIAL INTELLIGENCE - TEAM TRITON</text>
+    
+    <text x="0" y="140" font-family="sans-serif" font-size="76" font-weight="900" fill="#FFFFFF" letter-spacing="6">TRITON</text>
+    <text x="360" y="140" font-family="sans-serif" font-size="24" font-weight="bold" fill="url(#cyanGlow)" letter-spacing="4">AUV PLATFORM</text>
+    
+    <text x="0" y="185" font-family="sans-serif" font-size="20" font-weight="bold" fill="#00D4FF" letter-spacing="5">BUILT FOR THE OCEAN. ENGINEERED FOR IMPACT.</text>
+    <text x="0" y="215" font-family="sans-serif" font-size="15" fill="#A2CAE2" letter-spacing="3">EXPLORE. NAVIGATE. ACCOMPLISH.</text>
+  </g>
+
+  <rect x="80" y="325" width="1040" height="3" fill="url(#cyanGlow)" />
+
+  <g transform="translate(80, 350)">
+    <rect width="1040" height="80" rx="10" fill="url(#cardBg)" stroke="#087EAB" stroke-width="1.5" />
+    <text x="30" y="32" font-family="sans-serif" font-size="13" font-weight="bold" fill="#D7A747" letter-spacing="2">MISSION &amp; VISION STATEMENT</text>
+    <text x="30" y="58" font-family="sans-serif" font-size="15" fill="#EFF8FC" font-style="italic">
+      "To develop an intelligent and reliable underwater robotic platform capable of supporting underwater exploration, inspection, surveying, and object-retrieval operations."
+    </text>
+  </g>
+
+  <g transform="translate(80, 455)">
+    <rect x="0" y="0" width="245" height="110" rx="8" fill="url(#cardBg)" stroke="#00D4FF" stroke-opacity="0.4" stroke-width="1.5" />
+    <text x="25" y="35" font-family="sans-serif" font-size="13" fill="#8BB9D4">PROPULSION</text>
+    <text x="25" y="72" font-family="sans-serif" font-size="28" font-weight="bold" fill="#00D4FF">8 THRUSTERS</text>
+    <text x="25" y="95" font-family="sans-serif" font-size="13" fill="#26E6D1">6 Degrees of Freedom</text>
+
+    <rect x="265" y="0" width="245" height="110" rx="8" fill="url(#cardBg)" stroke="#00D4FF" stroke-opacity="0.4" stroke-width="1.5" />
+    <text x="290" y="35" font-family="sans-serif" font-size="13" fill="#8BB9D4">POWER SOURCE</text>
+    <text x="290" y="72" font-family="sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF">3S LiPo</text>
+    <text x="290" y="95" font-family="sans-serif" font-size="13" fill="#00D4FF">22,000 mAh Capacity</text>
+
+    <rect x="530" y="0" width="245" height="110" rx="8" fill="url(#cardBg)" stroke="#00D4FF" stroke-opacity="0.4" stroke-width="1.5" />
+    <text x="555" y="35" font-family="sans-serif" font-size="13" fill="#8BB9D4">WEIGHT &amp; DEPTH</text>
+    <text x="555" y="72" font-family="sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF">~22 kg</text>
+    <text x="555" y="95" font-family="sans-serif" font-size="13" fill="#26E6D1">~2 m Operating Depth</text>
+
+    <rect x="795" y="0" width="245" height="110" rx="8" fill="url(#cardBg)" stroke="#00D4FF" stroke-opacity="0.4" stroke-width="1.5" />
+    <text x="820" y="35" font-family="sans-serif" font-size="13" fill="#8BB9D4">CAD DIMENSIONS</text>
+    <text x="820" y="70" font-family="sans-serif" font-size="20" font-weight="bold" fill="#D7A747">482.6 x 331 x 262</text>
+    <text x="820" y="95" font-family="sans-serif" font-size="12" fill="#8BB9D4">Envelope Span: 582.7 mm</text>
+  </g>
+
+  <g transform="translate(80, 590)">
+    <rect x="0" y="0" width="500" height="250" rx="10" fill="url(#cardBg)" stroke="#087EAB" stroke-width="1.5" />
+    <text x="25" y="35" font-family="sans-serif" font-size="18" font-weight="bold" fill="#00D4FF">PROPULSION &amp; VEHICLE CONTROL</text>
+    <line x1="25" y1="45" x2="475" y2="45" stroke="#00D4FF" stroke-opacity="0.2" stroke-width="1" />
+    <text x="25" y="75" font-family="sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">4 Horizontal Vectored Thrusters (45 deg)</text>
+    <text x="25" y="97" font-family="sans-serif" font-size="13" fill="#A2CAE2">- Controls Surge, Sway, Yaw</text>
+    <text x="25" y="130" font-family="sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">4 Vertical Fixed Thrusters (182.6 mm Spacing)</text>
+    <text x="25" y="152" font-family="sans-serif" font-size="13" fill="#A2CAE2">- Controls Heave, Roll, Pitch</text>
+    <text x="25" y="185" font-family="sans-serif" font-size="15" font-weight="bold" fill="#D7A747">Autopilot &amp; ESCs:</text>
+    <text x="25" y="207" font-family="sans-serif" font-size="13" fill="#EFF8FC">Pixhawk 2.4.8 running ArduSub with 8 x 30A ESCs</text>
+    <text x="25" y="227" font-family="sans-serif" font-size="12" fill="#26E6D1">Hardware Kill Switch - Low Battery Failsafe - Leak Triggers</text>
+
+    <rect x="0" y="275" width="500" height="295" rx="10" fill="url(#cardBg)" stroke="#087EAB" stroke-width="1.5" />
+    <text x="25" y="310" font-family="sans-serif" font-size="18" font-weight="bold" fill="#00D4FF">INTELLIGENT SENSOR SUITE</text>
+    <line x1="25" y1="320" x2="475" y2="320" stroke="#00D4FF" stroke-opacity="0.2" stroke-width="1" />
+    <text x="25" y="350" font-family="sans-serif" font-size="14" fill="#FFFFFF">1. IMU: ICM-20948 (9-DOF attitude)</text>
+    <text x="25" y="380" font-family="sans-serif" font-size="14" fill="#FFFFFF">2. Depth Sensor: Bar30 high-resolution pressure</text>
+    <text x="25" y="410" font-family="sans-serif" font-size="14" fill="#FFFFFF">3. Magnetometer: RM3100 high-precision magnetic</text>
+    <text x="25" y="440" font-family="sans-serif" font-size="14" fill="#FFFFFF">4. Failsafe Probes: Internal leak sensor and temp</text>
+    <text x="25" y="470" font-family="sans-serif" font-size="14" fill="#FFFFFF">5. Dual Vision: Forward inspection + 39.23 deg downward camera</text>
+    <text x="25" y="500" font-family="sans-serif" font-size="14" fill="#FFFFFF">6. Acoustic Array: 3-Hydrophone 40 kHz pinger localization</text>
+    <text x="25" y="535" font-family="sans-serif" font-size="13" fill="#26E6D1">Transparent Acrylic Pressure Hull (114.3 mm OD, O-ring sealed)</text>
+  </g>
+
+  <g transform="translate(620, 590)">
+    <rect x="0" y="0" width="500" height="250" rx="10" fill="url(#cardBg)" stroke="#087EAB" stroke-width="1.5" />
+    <text x="25" y="35" font-family="sans-serif" font-size="18" font-weight="bold" fill="url(#cyanGlow)">YOLOv11 VISION &amp; EDGE AI</text>
+    <line x1="25" y1="45" x2="475" y2="45" stroke="#00D4FF" stroke-opacity="0.2" stroke-width="1" />
+    <text x="25" y="75" font-family="sans-serif" font-size="15" font-weight="bold" fill="#D7A747">Edge Compute: NVIDIA Jetson Orin Nano</text>
+    <text x="25" y="97" font-family="sans-serif" font-size="13" fill="#A2CAE2">- Upgraded to state-of-the-art YOLOv11 object detection</text>
+    <text x="25" y="117" font-family="sans-serif" font-size="13" fill="#A2CAE2">- Real-time target identification, classification and tracking</text>
+    <text x="25" y="148" font-family="sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">Underwater Optical Preprocessing:</text>
+    <text x="25" y="170" font-family="sans-serif" font-size="13" fill="#A2CAE2">- OpenCV pipeline with CLAHE contrast enhancement</text>
+    <text x="25" y="190" font-family="sans-serif" font-size="13" fill="#A2CAE2">- Real-time white balance and turbidity compensation</text>
+    <text x="25" y="220" font-family="sans-serif" font-size="12" fill="#00D4FF">Camera -> Preprocessing -> YOLOv11 -> Mission Logic -> MAVLink</text>
+
+    <rect x="0" y="275" width="500" height="295" rx="10" fill="url(#cardBg)" stroke="#087EAB" stroke-width="1.5" />
+    <text x="25" y="310" font-family="sans-serif" font-size="18" font-weight="bold" fill="#00D4FF">MISSION OBJECTIVES &amp; MODES</text>
+    <line x1="25" y1="320" x2="475" y2="320" stroke="#00D4FF" stroke-opacity="0.2" stroke-width="1" />
+    <text x="25" y="350" font-family="sans-serif" font-size="14" fill="#FFFFFF"><tspan fill="#D7A747" font-weight="bold">MODE 1:</tspan> Inspection (Ships, structures, pipelines, cables)</text>
+    <text x="25" y="380" font-family="sans-serif" font-size="14" fill="#FFFFFF"><tspan fill="#D7A747" font-weight="bold">MODE 2:</tspan> Survey (Large-area bathymetric mapping and data)</text>
+    <text x="25" y="410" font-family="sans-serif" font-size="14" fill="#FFFFFF"><tspan fill="#D7A747" font-weight="bold">MODE 3:</tspan> Object Retrieval (Locate, target, sample debris)</text>
+    <text x="25" y="450" font-family="sans-serif" font-size="14" font-weight="bold" fill="#26E6D1">Autonomous Mission Capabilities:</text>
+    <text x="25" y="475" font-family="sans-serif" font-size="13" fill="#EFF8FC">- Gate Transit and Qualification Navigation</text>
+    <text x="25" y="497" font-family="sans-serif" font-size="13" fill="#EFF8FC">- 3D Waypoint Tracking and Depth Holding</text>
+    <text x="25" y="519" font-family="sans-serif" font-size="13" fill="#EFF8FC">- Acoustic Pinger Homing and Return-to-Start</text>
+    <text x="25" y="541" font-family="sans-serif" font-size="12" fill="#8BB9D4">Positive buoyancy failsafe ensures passive surface recovery</text>
+  </g>
+
+  <g transform="translate(80, 1205)">
+    <rect width="1040" height="150" rx="10" fill="url(#cardBg)" stroke="#D7A747" stroke-width="2" />
+    <text x="40" y="40" font-family="sans-serif" font-size="22" font-weight="bold" fill="#D7A747">ENGINEER THE FUTURE BENEATH THE SURFACE</text>
+    <text x="40" y="70" font-family="sans-serif" font-size="15" fill="#FFFFFF">
+      Partner with Team Triton to advance intelligent marine robotics, support practical engineering education, and pioneer underwater technology.
+    </text>
+    <text x="40" y="105" font-family="sans-serif" font-size="14" fill="#26E6D1">
+      Categories: Hardware and Component Sponsorship - Financial Sponsorship - Technology and Computing Support - Fabrication Support - R&amp;D Collaboration
+    </text>
+    <text x="40" y="130" font-family="sans-serif" font-size="13" font-weight="bold" fill="#00D4FF">
+      Contact Team Triton: ASHOK - Phone: +91 98844 69962 - WhatsApp: 919884469962
+    </text>
+  </g>
+
+  <g transform="translate(80, 1400)">
+    <line x1="0" y1="0" x2="1040" y2="0" stroke="#087EAB" stroke-width="1.5" />
+    <text x="0" y="40" font-family="sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">TRITON - AUTONOMOUS UNDERWATER VEHICLE</text>
+    <text x="0" y="65" font-family="sans-serif" font-size="14" fill="#8BB9D4">TEAM TRITON - CHENNAI INSTITUTE OF TECHNOLOGY</text>
+    <text x="0" y="90" font-family="sans-serif" font-size="13" fill="#D7A747">BUILT FOR THE OCEAN. ENGINEERED FOR IMPACT.</text>
+    
+    <text x="1040" y="40" text-anchor="end" font-family="sans-serif" font-size="16" font-weight="bold" fill="#00D4FF">CONTACT: ASHOK</text>
+    <text x="1040" y="65" text-anchor="end" font-family="sans-serif" font-size="14" fill="#FFFFFF">+91 98844 69962</text>
+    <text x="1040" y="90" text-anchor="end" font-family="sans-serif" font-size="13" fill="#26E6D1">CHENNAI, TAMIL NADU, INDIA</text>
+  </g>
+</svg>""")
+
+doc = fitz.open(svg_path)
+pix = doc[0].get_pixmap(dpi=150)
+png_path = os.path.join(poster_dir, "triton_project_poster.png")
+pix.save(png_path)
+print("Saved poster PNG:", png_path)
+
+img_dir = r"C:\Users\su\.gemini\antigravity\scratch\triton-auv-website\frontend\public\assets\images"
+shutil.copy(png_path, os.path.join(img_dir, "triton_project_poster.png"))

@@ -1,0 +1,16 @@
+{
+  "name": "triton-auv-platform",
+  "version": "1.0.0",
+  "description": "Complete production-quality investor-facing website for TRITON Autonomous Underwater Vehicle",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev": "node scripts/start-dev.js",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend"
+  },
+  "keywords": ["triton", "auv", "robotics", "underwater", "chennai-institute-of-technology"],
+  "author": "Team Triton",
+  "license": "MIT"
+}
