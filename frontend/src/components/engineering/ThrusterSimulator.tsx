@@ -104,16 +104,16 @@ export const ThrusterSimulator: React.FC = () => {
   };
 
   return (
-    <div className="card-glass rounded-2xl p-6 border border-ocean-blue/40 shadow-2xl space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-ocean-blue/30 pb-4">
+    <div className="card-glass rounded-2xl p-6 border border-[#B9C7CC]/80 shadow-2xl space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#B9C7CC]/70 pb-4">
         <div>
           <div className="flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-ocean-cyan animate-pulse"></span>
-            <h3 className="font-heading font-bold text-lg text-white">
+            <h3 className="font-heading font-bold text-lg text-[#172832]">
               6-DOF PROPULSION &amp; THRUSTER ALLOCATION MATRIX
             </h3>
           </div>
-          <p className="text-xs text-ocean-ice/70 pt-1">
+          <p className="text-xs text-[#172832]/70 pt-1">
             Top-view schematic: 4 horizontal vectored thrusters (Electric Cyan) + 4 vertical fixed thrusters (Marine Gold)
           </p>
         </div>
@@ -122,17 +122,17 @@ export const ThrusterSimulator: React.FC = () => {
         <div className="flex items-center space-x-4 text-xs font-semibold">
           <div className="flex items-center space-x-1.5">
             <span className="w-3 h-3 rounded-full bg-ocean-cyan"></span>
-            <span className="text-ocean-cyan">Horizontal (45° Vectored)</span>
+            <span className="text-[#087F83]">Horizontal (45° Vectored)</span>
           </div>
           <div className="flex items-center space-x-1.5">
             <span className="w-3 h-3 rounded-full bg-ocean-gold"></span>
-            <span className="text-ocean-gold">Vertical (Fixed Heave)</span>
+            <span className="text-[#D98B73]">Vertical (Fixed Heave)</span>
           </div>
         </div>
       </div>
 
       {/* SVG Top-View Visualizer */}
-      <div className="relative bg-[#04121E] rounded-xl border border-ocean-blue/30 p-4 flex items-center justify-center min-h-[380px]">
+      <div className="relative bg-[#04121E] rounded-xl border border-[#B9C7CC]/70 p-4 flex items-center justify-center min-h-[380px]">
         <svg viewBox="0 0 600 420" className="w-full max-w-[560px] h-auto drop-shadow-2xl">
           {/* Hull Outline (482.6 x 331 mm proportional) */}
           <rect x="130" y="70" width="340" height="280" rx="20" fill="#061B2B" stroke="#087EAB" stroke-width="2" />
@@ -267,10 +267,10 @@ export const ThrusterSimulator: React.FC = () => {
       </div>
 
       {/* Description Box */}
-      <div className="bg-ocean-midnight/70 p-4 rounded-xl border border-ocean-blue/30 text-xs text-white/90 flex items-start space-x-3">
-        <Info className="w-5 h-5 text-ocean-cyan shrink-0 mt-0.5" />
+      <div className="bg-[#EDF3F4]/70 p-4 rounded-xl border border-[#B9C7CC]/70 text-xs text-[#172832]/90 flex items-start space-x-3">
+        <Info className="w-5 h-5 text-[#087F83] shrink-0 mt-0.5" />
         <div>
-          <div className="font-bold text-ocean-cyan uppercase tracking-wider mb-1">
+          <div className="font-bold text-[#087F83] uppercase tracking-wider mb-1">
             Active Mode Physics Explanation
           </div>
           <p className="leading-relaxed">
@@ -281,7 +281,7 @@ export const ThrusterSimulator: React.FC = () => {
 
       {/* 6-DOF Interactive Buttons Grid */}
       <div className="space-y-3">
-        <div className="text-xs font-bold text-ocean-gold uppercase tracking-wider">
+        <div className="text-xs font-bold text-[#D98B73] uppercase tracking-wider">
           Simulate Degrees of Freedom (DOF):
         </div>
 
@@ -292,7 +292,7 @@ export const ThrusterSimulator: React.FC = () => {
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-bold transition-all ${
               dof === 'surge_fwd'
                 ? 'bg-ocean-cyan text-ocean-deep border-ocean-cyan shadow-lg shadow-ocean-cyan/20 scale-105'
-                : 'bg-ocean-midnight/60 border-ocean-blue/30 text-white/80 hover:bg-ocean-blue/20'
+                : 'bg-[#F5F8F8] border-[#B9C7CC]/70 text-[#163C4B] hover:bg-ocean-blue/20'
             }`}
           >
             <ArrowUp className="w-4 h-4 mb-1" />
@@ -305,7 +305,7 @@ export const ThrusterSimulator: React.FC = () => {
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-bold transition-all ${
               dof === 'sway_stbd'
                 ? 'bg-ocean-cyan text-ocean-deep border-ocean-cyan shadow-lg shadow-ocean-cyan/20 scale-105'
-                : 'bg-ocean-midnight/60 border-ocean-blue/30 text-white/80 hover:bg-ocean-blue/20'
+                : 'bg-[#F5F8F8] border-[#B9C7CC]/70 text-[#163C4B] hover:bg-ocean-blue/20'
             }`}
           >
             <ArrowRight className="w-4 h-4 mb-1" />
@@ -318,7 +318,7 @@ export const ThrusterSimulator: React.FC = () => {
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-bold transition-all ${
               dof === 'yaw_cw'
                 ? 'bg-ocean-cyan text-ocean-deep border-ocean-cyan shadow-lg shadow-ocean-cyan/20 scale-105'
-                : 'bg-ocean-midnight/60 border-ocean-blue/30 text-white/80 hover:bg-ocean-blue/20'
+                : 'bg-[#F5F8F8] border-[#B9C7CC]/70 text-[#163C4B] hover:bg-ocean-blue/20'
             }`}
           >
             <RotateCw className="w-4 h-4 mb-1" />
@@ -332,7 +332,7 @@ export const ThrusterSimulator: React.FC = () => {
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-bold transition-all ${
               dof === 'heave_down'
                 ? 'bg-ocean-gold text-ocean-deep border-ocean-gold shadow-lg shadow-ocean-gold/20 scale-105'
-                : 'bg-ocean-midnight/60 border-ocean-blue/30 text-white/80 hover:bg-ocean-blue/20'
+                : 'bg-[#F5F8F8] border-[#B9C7CC]/70 text-[#163C4B] hover:bg-ocean-blue/20'
             }`}
           >
             <ArrowDown className="w-4 h-4 mb-1" />
@@ -345,7 +345,7 @@ export const ThrusterSimulator: React.FC = () => {
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-bold transition-all ${
               dof === 'roll_left'
                 ? 'bg-ocean-gold text-ocean-deep border-ocean-gold shadow-lg shadow-ocean-gold/20 scale-105'
-                : 'bg-ocean-midnight/60 border-ocean-blue/30 text-white/80 hover:bg-ocean-blue/20'
+                : 'bg-[#F5F8F8] border-[#B9C7CC]/70 text-[#163C4B] hover:bg-ocean-blue/20'
             }`}
           >
             <RotateCcw className="w-4 h-4 mb-1" />
@@ -358,7 +358,7 @@ export const ThrusterSimulator: React.FC = () => {
             className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-bold transition-all ${
               dof === 'pitch_up'
                 ? 'bg-ocean-gold text-ocean-deep border-ocean-gold shadow-lg shadow-ocean-gold/20 scale-105'
-                : 'bg-ocean-midnight/60 border-ocean-blue/30 text-white/80 hover:bg-ocean-blue/20'
+                : 'bg-[#F5F8F8] border-[#B9C7CC]/70 text-[#163C4B] hover:bg-ocean-blue/20'
             }`}
           >
             <Sliders className="w-4 h-4 mb-1" />

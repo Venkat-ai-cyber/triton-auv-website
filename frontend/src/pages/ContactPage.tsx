@@ -45,13 +45,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
       {/* Title */}
       <div className="text-center space-y-3 max-w-3xl mx-auto">
-        <span className="text-xs font-bold text-ocean-gold uppercase tracking-widest">
+        <span className="text-xs font-bold text-[#D98B73] uppercase tracking-widest">
           DIRECT COMMUNICATIONS DESK
         </span>
-        <h1 className="text-4xl sm:text-5xl font-heading font-black text-white">
+        <h1 className="text-4xl sm:text-5xl font-heading font-black text-[#172832]">
           CONTACT TEAM TRITON
         </h1>
-        <p className="text-sm text-ocean-ice/80">
+        <p className="text-sm text-[#163C4B]">
           Reach Team Triton directly for technical collaboration, sponsorship discussions, or hardware evaluations.
         </p>
       </div>
@@ -60,19 +60,19 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
         {/* Contact Info Cards */}
         <div className="space-y-6">
           {/* Primary Lead Card */}
-          <div className="card-glass rounded-2xl p-6 sm:p-8 border border-ocean-cyan/40 shadow-2xl space-y-6">
-            <div className="flex items-center space-x-3 border-b border-ocean-blue/30 pb-4">
+          <div className="card-glass rounded-2xl p-6 sm:p-8 border border-[#087F83]/40 shadow-2xl space-y-6">
+            <div className="flex items-center space-x-3 border-b border-[#B9C7CC]/70 pb-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-ocean-cyan to-ocean-blue flex items-center justify-center text-ocean-deep font-bold text-xl">
                 <Anchor className="w-6 h-6 text-ocean-deep" />
               </div>
               <div>
-                <span className="text-[10px] font-bold text-ocean-gold uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-[#D98B73] uppercase tracking-wider">
                   PRIMARY POINT OF CONTACT
                 </span>
-                <h3 className="text-2xl font-heading font-black text-white">
+                <h3 className="text-2xl font-heading font-black text-[#172832]">
                   {tritonConfig.contact.person}
                 </h3>
-                <p className="text-xs text-ocean-aqua">
+                <p className="text-xs text-[#087F83]">
                   Team Triton · Autonomous Underwater Vehicle Project
                 </p>
               </div>
@@ -81,12 +81,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             {/* Direct Action Channels */}
             <div className="space-y-3">
               {/* Phone Dial */}
-              <div className="bg-ocean-deep/60 p-4 rounded-xl border border-white/10 flex items-center justify-between">
+              <div className="bg-[#F5F8F8] p-4 rounded-xl border border-[#B9C7CC]/50 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <Phone className="w-5 h-5 text-ocean-cyan" />
+                  <Phone className="w-5 h-5 text-[#087F83]" />
                   <div>
-                    <span className="text-[10px] text-white/50 block">Voice Call</span>
-                    <a href={tritonConfig.contact.phoneUri} className="text-sm font-bold text-white hover:text-ocean-cyan font-mono">
+                    <span className="text-[10px] text-[#163C4B]/65 block">Voice Call</span>
+                    <a href={tritonConfig.contact.phoneUri} className="text-sm font-bold text-[#172832] hover:text-[#087F83] font-mono">
                       {tritonConfig.contact.internationalFormat}
                     </a>
                   </div>
@@ -95,7 +95,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={copyPhoneNumber}
-                    className="p-2 rounded-lg bg-ocean-midnight text-white/70 hover:text-white border border-white/10"
+                    className="p-2 rounded-lg bg-[#EDF3F4] text-[#163C4B]/85 hover:text-[#172832] border border-[#B9C7CC]/50"
                     title="Copy phone number"
                   >
                     {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
@@ -110,12 +110,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               </div>
 
               {/* WhatsApp Link */}
-              <div className="bg-ocean-deep/60 p-4 rounded-xl border border-white/10 flex items-center justify-between">
+              <div className="bg-[#F5F8F8] p-4 rounded-xl border border-[#B9C7CC]/50 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <MessageSquare className="w-5 h-5 text-green-400" />
                   <div>
-                    <span className="text-[10px] text-white/50 block">Instant Chat</span>
-                    <span className="text-sm font-bold text-white font-mono">WhatsApp Connect</span>
+                    <span className="text-[10px] text-[#163C4B]/65 block">Instant Chat</span>
+                    <span className="text-sm font-bold text-[#172832] font-mono">WhatsApp Connect</span>
                   </div>
                 </div>
 
@@ -130,10 +130,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               </div>
 
               {/* Institution Address */}
-              <div className="bg-ocean-deep/60 p-4 rounded-xl border border-white/10 flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-ocean-gold shrink-0 mt-0.5" />
-                <div className="text-xs text-white/80 leading-relaxed">
-                  <span className="font-bold text-white block mb-0.5">Team Triton Operations</span>
+              <div className="bg-[#F5F8F8] p-4 rounded-xl border border-[#B9C7CC]/50 flex items-start space-x-3">
+                <MapPin className="w-5 h-5 text-[#D98B73] shrink-0 mt-0.5" />
+                <div className="text-xs text-[#163C4B] leading-relaxed">
+                  <span className="font-bold text-[#172832] block mb-0.5">Team Triton Operations</span>
                   Team Triton Autonomous Robotics Facility, India
                 </div>
               </div>
@@ -142,12 +142,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
         </div>
 
         {/* Sponsorship Enquiry Form */}
-        <div className="card-glass rounded-2xl p-6 sm:p-8 border border-ocean-blue/40 shadow-2xl space-y-6">
-          <div className="border-b border-ocean-blue/30 pb-3">
-            <h3 className="text-xl font-heading font-bold text-white">
+        <div className="card-glass rounded-2xl p-6 sm:p-8 border border-[#B9C7CC]/80 shadow-2xl space-y-6">
+          <div className="border-b border-[#B9C7CC]/70 pb-3">
+            <h3 className="text-xl font-heading font-bold text-[#172832]">
               Send Sponsorship or Technical Enquiry
             </h3>
-            <p className="text-xs text-white/60 pt-1">
+            <p className="text-xs text-[#163C4B]/75 pt-1">
               Directly records your submission to local project database and contacts Ashok.
             </p>
           </div>
@@ -164,48 +164,48 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-xs font-semibold text-white/80 block mb-1">Your Full Name *</label>
+              <label className="text-xs font-semibold text-[#163C4B] block mb-1">Your Full Name *</label>
               <input
                 type="text"
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Dr. S. Ramesh / Jane Doe"
-                className="w-full bg-ocean-deep/80 border border-ocean-blue/40 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/30 focus:border-ocean-cyan focus:outline-none"
+                className="w-full bg-[#E8F1F3] border border-[#B9C7CC]/80 rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-ocean-cyan focus:outline-none"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-semibold text-white/80 block mb-1">Email Address *</label>
+                <label className="text-xs font-semibold text-[#163C4B] block mb-1">Email Address *</label>
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="contact@marine.org"
-                  className="w-full bg-ocean-deep/80 border border-ocean-blue/40 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/30 focus:border-ocean-cyan focus:outline-none"
+                  className="w-full bg-[#E8F1F3] border border-[#B9C7CC]/80 rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-ocean-cyan focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-white/80 block mb-1">Company / Organisation</label>
+                <label className="text-xs font-semibold text-[#163C4B] block mb-1">Company / Organisation</label>
                 <input
                   type="text"
                   value={formData.organisation}
                   onChange={(e) => setFormData({ ...formData, organisation: e.target.value })}
                   placeholder="Subsea Systems Inc."
-                  className="w-full bg-ocean-deep/80 border border-ocean-blue/40 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/30 focus:border-ocean-cyan focus:outline-none"
+                  className="w-full bg-[#E8F1F3] border border-[#B9C7CC]/80 rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-ocean-cyan focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-white/80 block mb-1">Enquiry Category</label>
+              <label className="text-xs font-semibold text-[#163C4B] block mb-1">Enquiry Category</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full bg-ocean-deep/80 border border-ocean-blue/40 rounded-xl px-4 py-2.5 text-xs text-white focus:border-ocean-cyan focus:outline-none"
+                className="w-full bg-[#E8F1F3] border border-[#B9C7CC]/80 rounded-xl px-4 py-2.5 text-xs text-[#172832] focus:border-ocean-cyan focus:outline-none"
               >
                 <option value="Hardware Sponsorship">Hardware and Component Sponsorship</option>
                 <option value="Financial Sponsorship">Financial Sponsorship</option>
@@ -217,14 +217,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-white/80 block mb-1">Message *</label>
+              <label className="text-xs font-semibold text-[#163C4B] block mb-1">Message *</label>
               <textarea
                 required
                 rows={4}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Details regarding your organization's sponsorship interest or technical collaboration goals..."
-                className="w-full bg-ocean-deep/80 border border-ocean-blue/40 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/30 focus:border-ocean-cyan focus:outline-none resize-none"
+                className="w-full bg-[#E8F1F3] border border-[#B9C7CC]/80 rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-ocean-cyan focus:outline-none resize-none"
               ></textarea>
             </div>
 

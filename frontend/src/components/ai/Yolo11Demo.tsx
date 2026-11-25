@@ -39,33 +39,33 @@ export const Yolo11Demo: React.FC = () => {
   const currentSample = sampleImages[selectedImageIndex];
 
   return (
-    <div className="card-glass rounded-2xl p-6 border border-ocean-blue/40 shadow-2xl space-y-6">
+    <div className="card-glass rounded-2xl p-6 border border-[#B9C7CC]/80 shadow-2xl space-y-6">
       {/* Header with YOLOv11 update emphasis */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-ocean-blue/30 pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#B9C7CC]/70 pb-4">
         <div>
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-ocean-cyan text-ocean-deep">
               UPDATED ARCHITECTURE
             </span>
-            <h3 className="font-heading font-bold text-lg text-white flex items-center space-x-2">
-              <Eye className="w-5 h-5 text-ocean-cyan" />
+            <h3 className="font-heading font-bold text-lg text-[#172832] flex items-center space-x-2">
+              <Eye className="w-5 h-5 text-[#087F83]" />
               <span>YOLOv11 DEEP VISION &amp; PREPROCESSING ENGINE</span>
             </h3>
           </div>
-          <p className="text-xs text-ocean-ice/70 pt-1">
+          <p className="text-xs text-[#172832]/70 pt-1">
             Upgraded from legacy YOLOv8 Nano to state-of-the-art YOLOv11 running on NVIDIA Jetson Orin Nano
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 text-xs font-mono bg-ocean-midnight/80 px-3 py-1.5 rounded-lg border border-ocean-cyan/30 text-ocean-cyan">
-          <Cpu className="w-3.5 h-3.5 text-ocean-cyan" />
+        <div className="flex items-center space-x-2 text-xs font-mono bg-white px-3 py-1.5 rounded-lg border border-[#087F83]/30 text-[#087F83]">
+          <Cpu className="w-3.5 h-3.5 text-[#087F83]" />
           <span>INFERENCE: JETSON ORIN NANO</span>
         </div>
       </div>
 
       {/* 7-Step Animated AI Pipeline */}
       <div className="space-y-2">
-        <div className="text-xs font-bold uppercase tracking-wider text-ocean-gold">
+        <div className="text-xs font-bold uppercase tracking-wider text-[#D98B73]">
           Intelligent End-to-End Perception Pipeline:
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2 text-center text-xs">
@@ -80,19 +80,19 @@ export const Yolo11Demo: React.FC = () => {
           ].map((s, idx) => (
             <div 
               key={s.step} 
-              className="bg-ocean-midnight/60 p-2.5 rounded-lg border border-ocean-blue/30 relative flex flex-col justify-between"
+              className="bg-[#F5F8F8] p-2.5 rounded-lg border border-[#B9C7CC]/70 relative flex flex-col justify-between"
             >
-              <div className="text-[10px] font-mono text-ocean-cyan font-bold mb-1">
+              <div className="text-[10px] font-mono text-[#087F83] font-bold mb-1">
                 STEP {s.step}
               </div>
-              <div className="font-bold text-white text-[11px] leading-tight mb-1">
+              <div className="font-bold text-[#172832] text-[11px] leading-tight mb-1">
                 {s.title}
               </div>
-              <div className="text-[10px] text-white/50">
+              <div className="text-[10px] text-[#163C4B]/65">
                 {s.desc}
               </div>
               {idx < 6 && (
-                <div className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-ocean-cyan text-[10px] font-bold">
+                <div className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-[#087F83] text-[10px] font-bold">
                   →
                 </div>
               )}
@@ -104,7 +104,7 @@ export const Yolo11Demo: React.FC = () => {
       {/* Interactive Detection Playground */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
         {/* Left: Viewport with overlay */}
-        <div className="lg:col-span-2 relative bg-[#01080e] rounded-xl overflow-hidden border border-ocean-blue/40 aspect-[4/3] flex items-center justify-center">
+        <div className="lg:col-span-2 relative bg-[#01080e] rounded-xl overflow-hidden border border-[#B9C7CC]/80 aspect-[4/3] flex items-center justify-center">
           {/* Base image with simulated underwater turbidity and CLAHE filter */}
           <div 
             className="relative w-full h-full flex items-center justify-center overflow-hidden"
@@ -145,7 +145,7 @@ export const Yolo11Demo: React.FC = () => {
             >
               <div className="absolute -top-6 left-0 bg-ocean-cyan text-ocean-deep px-1.5 py-0.5 text-[10px] font-bold rounded flex items-center space-x-1 whitespace-nowrap shadow">
                 <span>{det.label}</span>
-                <span className="font-mono bg-ocean-deep text-ocean-cyan px-1 rounded text-[9px]">
+                <span className="font-mono bg-[#E8F1F3] text-[#087F83] px-1 rounded text-[9px]">
                   {(det.conf * 100).toFixed(0)}%
                 </span>
               </div>
@@ -153,7 +153,7 @@ export const Yolo11Demo: React.FC = () => {
           ))}
 
           {/* Model Stamp */}
-          <div className="absolute bottom-3 left-3 bg-ocean-deep/90 backdrop-blur-md px-2.5 py-1 rounded border border-ocean-cyan/30 text-[10px] font-mono text-ocean-cyan flex items-center space-x-1.5">
+          <div className="absolute bottom-3 left-3 bg-[#E8F1F3] backdrop-blur-md px-2.5 py-1 rounded border border-[#087F83]/30 text-[10px] font-mono text-[#087F83] flex items-center space-x-1.5">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
             <span>YOLOv11s-AUV · REAL-TIME INFERENCE</span>
           </div>
@@ -162,13 +162,13 @@ export const Yolo11Demo: React.FC = () => {
         {/* Right: Controls & Parameters */}
         <div className="space-y-4 flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="text-xs font-bold text-white uppercase tracking-wider border-b border-ocean-blue/30 pb-2">
+            <div className="text-xs font-bold text-[#172832] uppercase tracking-wider border-b border-[#B9C7CC]/70 pb-2">
               Vision Preprocessing Controls
             </div>
 
             {/* Select Sample Footage */}
             <div className="space-y-1.5">
-              <label className="text-xs text-white/70 font-medium">Select Underwater Footage:</label>
+              <label className="text-xs text-[#163C4B]/85 font-medium">Select Underwater Footage:</label>
               <div className="space-y-1.5">
                 {sampleImages.map((s, idx) => (
                   <button
@@ -176,8 +176,8 @@ export const Yolo11Demo: React.FC = () => {
                     onClick={() => setSelectedImageIndex(idx)}
                     className={`w-full text-left p-2 rounded-lg text-xs transition-all flex items-center justify-between ${
                       selectedImageIndex === idx
-                        ? 'bg-ocean-cyan/20 border border-ocean-cyan text-ocean-cyan font-bold'
-                        : 'bg-ocean-midnight/50 border border-ocean-blue/20 text-white/70 hover:bg-ocean-blue/20'
+                        ? 'bg-ocean-cyan/20 border border-ocean-cyan text-[#087F83] font-bold'
+                        : 'bg-[#EDF3F4]/50 border border-[#B9C7CC]/50 text-[#163C4B]/85 hover:bg-ocean-blue/20'
                     }`}
                   >
                     <span className="truncate pr-2">{s.title}</span>
@@ -188,17 +188,17 @@ export const Yolo11Demo: React.FC = () => {
             </div>
 
             {/* CLAHE Contrast Toggle */}
-            <div className="flex items-center justify-between bg-ocean-midnight/50 p-3 rounded-lg border border-ocean-blue/20">
+            <div className="flex items-center justify-between bg-[#EDF3F4]/50 p-3 rounded-lg border border-[#B9C7CC]/50">
               <div>
-                <span className="text-xs font-bold text-white block">CLAHE Equalization</span>
-                <span className="text-[10px] text-white/50">Contrast Limited Adaptive Histogram</span>
+                <span className="text-xs font-bold text-[#172832] block">CLAHE Equalization</span>
+                <span className="text-[10px] text-[#163C4B]/65">Contrast Limited Adaptive Histogram</span>
               </div>
               <button
                 onClick={() => setEnableClahe(!enableClahe)}
                 className={`px-3 py-1 rounded text-xs font-bold transition-all ${
                   enableClahe 
                     ? 'bg-ocean-cyan text-ocean-deep' 
-                    : 'bg-ocean-deep text-white/50 border border-white/20'
+                    : 'bg-[#E8F1F3] text-[#163C4B]/65 border border-white/20'
                 }`}
               >
                 {enableClahe ? 'ACTIVE' : 'BYPASS'}
@@ -206,17 +206,17 @@ export const Yolo11Demo: React.FC = () => {
             </div>
 
             {/* Bounding Box Toggle */}
-            <div className="flex items-center justify-between bg-ocean-midnight/50 p-3 rounded-lg border border-ocean-blue/20">
+            <div className="flex items-center justify-between bg-[#EDF3F4]/50 p-3 rounded-lg border border-[#B9C7CC]/50">
               <div>
-                <span className="text-xs font-bold text-white block">YOLOv11 Annotations</span>
-                <span className="text-[10px] text-white/50">Bounding boxes and confidence</span>
+                <span className="text-xs font-bold text-[#172832] block">YOLOv11 Annotations</span>
+                <span className="text-[10px] text-[#163C4B]/65">Bounding boxes and confidence</span>
               </div>
               <button
                 onClick={() => setEnableBoxes(!enableBoxes)}
                 className={`px-3 py-1 rounded text-xs font-bold transition-all ${
                   enableBoxes 
                     ? 'bg-ocean-cyan text-ocean-deep' 
-                    : 'bg-ocean-deep text-white/50 border border-white/20'
+                    : 'bg-[#E8F1F3] text-[#163C4B]/65 border border-white/20'
                 }`}
               >
                 {enableBoxes ? 'VISIBLE' : 'HIDDEN'}
@@ -224,10 +224,10 @@ export const Yolo11Demo: React.FC = () => {
             </div>
 
             {/* Turbidity Simulation Slider */}
-            <div className="space-y-1.5 bg-ocean-midnight/50 p-3 rounded-lg border border-ocean-blue/20">
+            <div className="space-y-1.5 bg-[#EDF3F4]/50 p-3 rounded-lg border border-[#B9C7CC]/50">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-white">Water Turbidity Simulator</span>
-                <span className="font-mono text-ocean-cyan">{turbidityLevel}%</span>
+                <span className="font-bold text-[#172832]">Water Turbidity Simulator</span>
+                <span className="font-mono text-[#087F83]">{turbidityLevel}%</span>
               </div>
               <input
                 type="range"
@@ -237,14 +237,14 @@ export const Yolo11Demo: React.FC = () => {
                 onChange={(e) => setTurbidityLevel(Number(e.target.value))}
                 className="w-full accent-ocean-cyan cursor-pointer"
               />
-              <span className="text-[10px] text-white/50 block">
+              <span className="text-[10px] text-[#163C4B]/65 block">
                 Adjusts simulated aquatic absorption &amp; turbidity scattering.
               </span>
             </div>
           </div>
 
           {/* Genuine disclaimer */}
-          <div className="bg-ocean-deep/90 p-3 rounded-lg border border-ocean-gold/30 text-[11px] text-ocean-gold">
+          <div className="bg-[#E8F1F3] p-3 rounded-lg border border-ocean-gold/30 text-[11px] text-[#D98B73]">
             <strong>Demonstration Disclosure:</strong> This interface interactively demonstrates real-world Robosub benchmark footage, CLAHE optical compensation, and YOLOv11 target localization logic.
           </div>
         </div>

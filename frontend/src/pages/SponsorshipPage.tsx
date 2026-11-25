@@ -12,13 +12,13 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
       {/* Hero Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <span className="text-xs font-bold text-ocean-gold uppercase tracking-widest">
+        <span className="text-xs font-bold text-[#D98B73] uppercase tracking-widest">
           CORPORATE &amp; INSTITUTIONAL PARTNERSHIP
         </span>
-        <h1 className="text-4xl sm:text-6xl font-heading font-black text-white">
+        <h1 className="text-4xl sm:text-6xl font-heading font-black text-[#172832]">
           {tritonConfig.sponsorship.heading}
         </h1>
-        <p className="text-sm sm:text-base text-ocean-ice/80 leading-relaxed">
+        <p className="text-sm sm:text-base text-[#163C4B] leading-relaxed">
           "{tritonConfig.sponsorship.supportingMessage}"
         </p>
 
@@ -37,7 +37,7 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
           </button>
           <button
             onClick={() => onNavigate('technology')}
-            className="px-6 py-3 rounded-xl bg-ocean-midnight border border-ocean-blue/50 text-white font-heading font-bold text-xs uppercase tracking-wider hover:bg-ocean-blue/30 transition-all"
+            className="px-6 py-3 rounded-xl bg-[#EDF3F4] border border-ocean-blue/50 text-[#172832] font-heading font-bold text-xs uppercase tracking-wider hover:bg-ocean-blue/30 transition-all"
           >
             EXPLORE OUR TECHNOLOGY
           </button>
@@ -46,11 +46,11 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
 
       {/* Why Partner with Team Triton? */}
       <section className="space-y-6">
-        <div className="border-b border-ocean-blue/30 pb-3 text-center sm:text-left">
-          <span className="text-xs font-bold text-ocean-cyan uppercase tracking-wider">
+        <div className="border-b border-[#B9C7CC]/70 pb-3 text-center sm:text-left">
+          <span className="text-xs font-bold text-[#087F83] uppercase tracking-wider">
             VALUE PROPOSITION
           </span>
-          <h2 className="text-2xl font-heading font-bold text-white mt-0.5">
+          <h2 className="text-2xl font-heading font-bold text-[#172832] mt-0.5">
             Why Partner with Team Triton?
           </h2>
         </div>
@@ -59,12 +59,12 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
           {tritonConfig.sponsorship.whyPartner.map((reason: string, idx: number) => (
             <div 
               key={idx}
-              className="card-glass p-5 rounded-xl border border-ocean-blue/30 flex items-start space-x-3"
+              className="card-glass p-5 rounded-xl border border-[#B9C7CC]/70 flex items-start space-x-3"
             >
-              <div className="w-7 h-7 rounded-lg bg-ocean-cyan/20 border border-ocean-cyan/30 flex items-center justify-center text-ocean-cyan shrink-0 mt-0.5">
-                <CheckCircle2 className="w-4 h-4 text-ocean-cyan" />
+              <div className="w-7 h-7 rounded-lg bg-ocean-cyan/20 border border-[#087F83]/30 flex items-center justify-center text-[#087F83] shrink-0 mt-0.5">
+                <CheckCircle2 className="w-4 h-4 text-[#087F83]" />
               </div>
-              <span className="text-xs text-white/90 leading-relaxed font-medium">
+              <span className="text-xs text-[#172832]/90 leading-relaxed font-medium">
                 {reason}
               </span>
             </div>
@@ -74,14 +74,14 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
 
       {/* 5 Sponsorship Categories */}
       <section className="space-y-6">
-        <div className="border-b border-ocean-blue/30 pb-3 text-center sm:text-left">
-          <span className="text-xs font-bold text-ocean-gold uppercase tracking-wider">
+        <div className="border-b border-[#B9C7CC]/70 pb-3 text-center sm:text-left">
+          <span className="text-xs font-bold text-[#D98B73] uppercase tracking-wider">
             ENGAGEMENT TIERS
           </span>
-          <h2 className="text-2xl font-heading font-bold text-white mt-0.5">
+          <h2 className="text-2xl font-heading font-bold text-[#172832] mt-0.5">
             Sponsorship &amp; Collaboration Categories
           </h2>
-          <p className="text-xs text-white/60 pt-1">
+          <p className="text-xs text-[#163C4B]/75 pt-1">
             Clearly structured areas of hardware, software, financial, and manufacturing support
           </p>
         </div>
@@ -93,20 +93,20 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
               className="card-glass rounded-2xl p-6 border border-ocean-gold/40 hover:border-ocean-gold shadow-xl space-y-4 flex flex-col justify-between transition-all"
             >
               <div className="space-y-3">
-                <span className="px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-ocean-gold/20 text-ocean-gold">
+                <span className="px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-ocean-gold/20 text-[#D98B73]">
                   CATEGORY 0{idx + 1}
                 </span>
-                <h3 className="text-lg font-heading font-bold text-white">
+                <h3 className="text-lg font-heading font-bold text-[#172832]">
                   {cat.title}
                 </h3>
-                <p className="text-xs text-white/70 leading-relaxed">
+                <p className="text-xs text-[#163C4B]/85 leading-relaxed">
                   {cat.desc}
                 </p>
               </div>
 
               <button
                 onClick={() => onNavigate('contact')}
-                className="w-full py-2.5 text-center text-xs font-bold uppercase tracking-wider bg-ocean-midnight hover:bg-ocean-gold hover:text-ocean-deep text-ocean-gold border border-ocean-gold/40 rounded-xl transition-all"
+                className="w-full py-2.5 text-center text-xs font-bold uppercase tracking-wider bg-[#EDF3F4] hover:bg-ocean-gold hover:text-ocean-deep text-[#D98B73] border border-ocean-gold/40 rounded-xl transition-all"
               >
                 Inquire for Category 0{idx + 1}
               </button>
@@ -116,11 +116,11 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
       </section>
 
       {/* Main Closing Call to Action */}
-      <div className="card-glass p-8 sm:p-12 rounded-3xl border border-ocean-cyan/40 bg-gradient-to-br from-ocean-midnight via-[#07253D] to-ocean-deep text-center space-y-6 shadow-2xl">
-        <h2 className="text-3xl sm:text-4xl font-heading font-black text-white">
+      <div className="card-glass p-8 sm:p-12 rounded-3xl border border-[#087F83]/40 bg-gradient-to-br from-ocean-midnight via-[#07253D] to-ocean-deep text-center space-y-6 shadow-2xl">
+        <h2 className="text-3xl sm:text-4xl font-heading font-black text-[#172832]">
           {tritonConfig.sponsorship.mainCta}
         </h2>
-        <p className="text-xs sm:text-sm text-white/80 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#163C4B] max-w-2xl mx-auto leading-relaxed">
           Whether you represent an aerospace manufacturer, marine survey organization, naval defense lab, or academic institution, our team welcomes your collaboration.
         </p>
 

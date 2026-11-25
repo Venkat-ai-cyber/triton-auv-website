@@ -1,26 +1,18 @@
 import React, { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, useGLTF, Float, Html } from '@react-three/drei';
+import { OrbitControls, useGLTF, Float, Html, Line } from '@react-three/drei';
 import * as THREE from 'three';
 import { 
   Compass, 
   RotateCw, 
   Maximize2, 
   Minimize2, 
-  Layers, 
-  Eye, 
   ArrowRight, 
   ChevronDown, 
-  Zap, 
-  ShieldCheck, 
-  Cpu, 
   Award,
-  Sparkles,
-  HelpCircle,
-  Crosshair,
   Sliders,
-  CheckCircle2,
-  RefreshCw
+  Crosshair,
+  RefreshCcw
 } from 'lucide-react';
 import { PageRoute } from '../../types';
 
@@ -38,267 +30,240 @@ interface SceneConfig {
   camPos: [number, number, number];
   targetPos: [number, number, number];
   highlight: ComponentHighlight;
-  callouts?: { title: string; desc: string; pos: string }[];
+  exploded?: boolean;
+  showPropulsionVectors?: boolean;
+  sensorsList?: string[];
 }
 
 const SCENES: SceneConfig[] = [
   {
     id: 0,
-    badge: 'PHASE 01 · SYSTEM INTRODUCTION',
+    badge: 'SCENE 01 · HERO PRODUCT REVEAL',
     title: 'MEET TRITON.',
-    description: 'An underwater robotic platform designed to explore and operate beneath the surface with precision propulsion, intelligent perception, and robust subsea endurance.',
-    camPos: [0.72, 0.35, 0.72],
+    description: 'Engineered to explore, inspect, and operate beneath the surface. Built from the authoritative 153-solid ER.STEP engineering assembly.',
+    camPos: [0.85, 0.38, 0.85],
     targetPos: [0, 0, 0],
-    highlight: 'all',
-    callouts: [
-      { title: 'Full Assembly', desc: '458 × 363 × 231 mm physical envelope', pos: 'top-right' }
-    ]
+    highlight: 'all'
   },
   {
     id: 1,
-    badge: 'PHASE 02 · HYDRODYNAMIC ARCHITECTURE',
-    title: 'ENGINEERED FOR UNDERWATER OPERATIONS.',
-    description: 'Precision hydrodynamic geometry balancing neutral buoyancy, center-of-gravity stabilization, and high payload clearance for complex subsea surveys.',
-    camPos: [0.82, 0.18, 0.22],
+    badge: 'SCENE 02 · FULL VEHICLE EXPLORATION',
+    title: 'HYDRODYNAMIC EXTERIOR PROFILE.',
+    description: 'Gradual orbital inspection revealing the front optical corridor, side truss geometry, rear propulsion envelope, and top buoyancy pods.',
+    camPos: [0.92, 0.22, -0.25],
     targetPos: [0, 0, 0],
-    highlight: 'frame',
-    callouts: [
-      { title: 'Skeletal Chassis', desc: 'Anodized corrosion-resistant truss plates', pos: 'bottom-left' },
-      { title: 'Buoyancy Balancing', desc: 'Dual upper pods ensuring upright trim', pos: 'top-right' }
-    ]
+    highlight: 'frame'
   },
   {
     id: 2,
-    badge: 'PHASE 03 · PROPULSION & 6-DOF DYNAMICS',
-    title: 'PRECISION PROPULSION. CONTROLLED MOVEMENT.',
-    description: '4 horizontal vectored thrusters delivering surge, sway, and yaw agility, matched with 4 vertical thrusters for pitch, roll, and heave depth control across 6 degrees of freedom.',
-    camPos: [0.65, 0.32, 0.45],
+    badge: 'SCENE 03 · PROPULSION REVEAL',
+    title: 'EIGHT-THRUSTER 6-DOF PROPULSION.',
+    description: 'Four 45°-vectored horizontal T28 thrusters mounted on angled fixtures paired with four vertical T28 thrusters for full six-degree-of-freedom control.',
+    camPos: [0.72, 0.34, 0.56],
     targetPos: [0, 0, 0],
     highlight: 'propulsion',
-    callouts: [
-      { title: 'Horizontal Vectored Quad', desc: '4 corner-mounted high-thrust brushless pods', pos: 'bottom-right' },
-      { title: 'Vertical Quad', desc: '4 dedicated vertical thrusters for pitch & heave', pos: 'top-left' }
-    ]
+    showPropulsionVectors: true
   },
   {
     id: 3,
-    badge: 'PHASE 04 · ENCLOSURE & STRUCTURAL INTEGRITY',
-    title: 'BUILT AROUND ENGINEERING PRECISION.',
-    description: 'Centerline cylindrical acrylic pressure vessel protecting core avionics, flight compute, and high-discharge LiPo battery modules within an impact-absorbent structure.',
-    camPos: [0.22, 0.52, 0.55],
-    targetPos: [0, 0, 0],
+    badge: 'SCENE 04 · STRUCTURAL ASSEMBLY (EXPLODED VIEW)',
+    title: 'CONTROLLED STRUCTURAL SEPARATION.',
+    description: 'Components translate along their true CAD assembly axes—lifting the upper buoyancy pods and separating angled propulsion fixtures to reveal the Ø114.3 mm pressure hull and internal electronics tray.',
+    camPos: [0.68, 0.44, 0.72],
+    targetPos: [0, 0.02, 0],
     highlight: 'hull',
-    callouts: [
-      { title: 'Acrylic Pressure Vessel', desc: 'Optically clear underwater instrumentation hull', pos: 'center-right' },
-      { title: 'Sealing Interfaces', desc: 'Dual O-ring modular endcap penetration ports', pos: 'bottom-center' }
-    ]
+    exploded: true
   },
   {
     id: 4,
-    badge: 'PHASE 05 · MULTI-MODAL TELEMETRY',
+    badge: 'SCENE 05 · SENSOR & PERCEPTION SUITE',
     title: 'SEE. SENSE. UNDERSTAND.',
-    description: 'Integrated forward optical intake dome, Bar30 subsea pressure transducer, 9-DOF IMU, and acoustic telemetry providing high-accuracy spatial localization.',
-    camPos: [0.65, 0.18, 0.15],
+    description: 'Integrated multi-modal sensing for underwater localization, depth-hold, heading stabilization, and acoustic beacon tracking.',
+    camPos: [0.65, 0.2, 0.45],
     targetPos: [0, 0, 0],
     highlight: 'all',
-    callouts: [
-      { title: 'Forward Vision Port', desc: 'Ultra-low distortion subsea camera aperture', pos: 'top-left' },
-      { title: 'Depth & IMU Array', desc: 'Bar30 depth resolution & 9-axis sensor fusion', pos: 'bottom-right' }
+    sensorsList: [
+      'ICM-20948 9-DOF IMU',
+      'Bar30 Depth Sensor',
+      'RM3100 Magnetometer',
+      'Subsea Cameras',
+      'Leak Sensor',
+      'Temperature Sensor',
+      'Three-Hydrophone Array'
     ]
   },
   {
     id: 5,
-    badge: 'PHASE 06 · EDGE NEURAL COMPUTING',
+    badge: 'SCENE 06 · AI & INTELLIGENCE',
     title: 'INTELLIGENCE BENEATH THE SURFACE.',
-    description: 'Onboard NVIDIA Jetson Orin Nano running real-time YOLOv11 subsea target detection with CLAHE optical contrast filtering for turbid and low-visibility waters.',
-    camPos: [0.68, 0.28, 0.32],
+    description: 'Edge perception pipeline running on NVIDIA Jetson Orin Nano: Camera Input → OpenCV (CLAHE + White Balance Correction) → YOLOv11 → Object Detection → Mission Decisions.',
+    camPos: [0.74, 0.28, 0.48],
     targetPos: [0, 0, 0],
     highlight: 'all'
   },
   {
     id: 6,
-    badge: 'PHASE 07 · OPERATIONAL READINESS',
+    badge: 'SCENE 07 · COMPLETE VEHICLE REVEAL',
     title: 'ENGINEERED TO EXPLORE WHAT LIES BENEATH.',
-    description: 'A complete underwater robotic platform engineered for infrastructure inspection, environmental surveys, subsea object retrieval, and advanced marine research.',
-    camPos: [0.78, 0.42, 0.78],
+    description: 'A unified autonomous underwater robotics platform ready for subsea inspection, surveying, and object-retrieval operations.',
+    camPos: [0.88, 0.42, 0.88],
     targetPos: [0, 0, 0],
     highlight: 'all'
   }
 ];
 
-// Inner 3D Model with PBR Shaders
 interface ModelInnerProps {
   highlight: ComponentHighlight;
   interactiveMode: boolean;
-  pulsePropulsion: boolean;
+  exploded: boolean;
+  showVectors: boolean;
 }
 
-function AuthenticTritonModel({ highlight, interactiveMode, pulsePropulsion }: ModelInnerProps) {
+function AuthenticStepModel({ highlight, interactiveMode, exploded, showVectors }: ModelInnerProps) {
   const { scene } = useGLTF('/assets/models/triton.glb');
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
   const groupRef = useRef<THREE.Group>(null);
-  const thrustersRef = useRef<THREE.Object3D[]>([]);
+  const nodesRef = useRef<Record<string, THREE.Object3D>>({});
 
   useEffect(() => {
-    thrustersRef.current = [];
-
+    nodesRef.current = {};
     clonedScene.traverse((child: any) => {
+      const n = child.name || '';
+      if (['Horizontal_Thrusters', 'Vertical_Thrusters', 'Propulsion_Fixtures', 'Pressure_Hull', 'Buoyancy_Pods', 'Structural_Frame', 'Electronics_Tray'].includes(n)) {
+        nodesRef.current[n] = child;
+      }
+
       if (child.isMesh) {
         child.castShadow = true;
         child.receiveShadow = true;
 
         const name = (child.name || child.parent?.name || '').toLowerCase();
-
-        const isHorizontal = name.includes('horizontal');
-        const isVertical = name.includes('vertical');
-        const isThruster = isHorizontal || isVertical || name.includes('thruster');
+        const isThruster = name.includes('thruster');
+        const isFixture = name.includes('fixture');
+        const isPropulsion = isThruster || isFixture;
         const isHull = name.includes('hull');
+        const isTray = name.includes('electronics');
         const isBuoyancy = name.includes('buoyancy');
-        const isFrame = name.includes('frame') || name.includes('structural');
+        const isFrame = name.includes('frame');
 
-        if (isThruster) {
-          thrustersRef.current.push(child);
+        let dimOpacity = 1.0;
+        let isHighlighted = true;
+
+        if (highlight === 'propulsion') isHighlighted = isPropulsion;
+        else if (highlight === 'hull') isHighlighted = isHull || isTray;
+        else if (highlight === 'frame') isHighlighted = isFrame;
+        else if (highlight === 'buoyancy') isHighlighted = isBuoyancy;
+
+        if (highlight !== 'all' && !isHighlighted) {
+          dimOpacity = 0.2;
         }
 
-        // Determine visibility or highlighting
-        let isHighlighted = true;
-        let dimFactor = 1.0;
-
-        if (highlight === 'propulsion' && !isThruster) dimFactor = 0.22;
-        if (highlight === 'hull' && !isHull) dimFactor = 0.22;
-        if (highlight === 'frame' && !isFrame) dimFactor = 0.22;
-        if (highlight === 'buoyancy' && !isBuoyancy) dimFactor = 0.22;
-
         if (isThruster) {
-          const isTargetHighlight = highlight === 'propulsion' || highlight === 'all';
           child.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color(isTargetHighlight ? '#00D4FF' : '#0F344D'),
-            metalness: 0.85,
+            color: new THREE.Color(isHighlighted ? '#087F83' : '#4A6572'),
+            metalness: 0.78,
             roughness: 0.25,
-            emissive: new THREE.Color('#00D4FF'),
-            emissiveIntensity: isTargetHighlight ? 0.35 : 0.05,
-            transparent: dimFactor < 1.0,
-            opacity: dimFactor
+            emissive: new THREE.Color('#14A9A0'),
+            emissiveIntensity: highlight === 'propulsion' ? 0.45 : 0.1,
+            transparent: dimOpacity < 1.0,
+            opacity: dimOpacity
+          });
+        } else if (isFixture) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color('#163C4B'),
+            metalness: 0.8,
+            roughness: 0.3,
+            transparent: dimOpacity < 1.0,
+            opacity: dimOpacity
           });
         } else if (isHull) {
-          const isTargetHighlight = highlight === 'hull' || highlight === 'all';
           child.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color(isTargetHighlight ? '#D4F0FC' : '#1C3A50'),
+            color: new THREE.Color('#CBEAF0'),
             metalness: 0.15,
             roughness: 0.1,
             transparent: true,
-            opacity: isTargetHighlight ? 0.78 : 0.25
+            opacity: isHighlighted ? 0.62 : 0.18
           });
-        } else if (isFrame) {
-          const isTargetHighlight = highlight === 'frame' || highlight === 'all';
+        } else if (isTray) {
           child.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color(isTargetHighlight ? '#D7A747' : '#1A2F40'),
-            metalness: 0.9,
-            roughness: 0.3,
-            transparent: dimFactor < 1.0,
-            opacity: dimFactor
+            color: new THREE.Color('#172832'),
+            metalness: 0.6,
+            roughness: 0.4,
+            emissive: new THREE.Color('#14A9A0'),
+            emissiveIntensity: highlight === 'hull' ? 0.3 : 0.05,
+            transparent: dimOpacity < 1.0,
+            opacity: dimOpacity
           });
         } else if (isBuoyancy) {
-          const isTargetHighlight = highlight === 'buoyancy' || highlight === 'all';
           child.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color(isTargetHighlight ? '#26E6D1' : '#0B2C3D'),
-            metalness: 0.4,
-            roughness: 0.4,
-            transparent: dimFactor < 1.0,
-            opacity: dimFactor
+            color: new THREE.Color(isHighlighted ? '#14A9A0' : '#6A838D'),
+            metalness: 0.35,
+            roughness: 0.38,
+            transparent: dimOpacity < 1.0,
+            opacity: dimOpacity
           });
-        } else {
+        } else if (isFrame) {
           child.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color('#087EAB'),
-            metalness: 0.7,
-            roughness: 0.35,
-            transparent: dimFactor < 1.0,
-            opacity: dimFactor
+            color: new THREE.Color(isHighlighted ? '#2C424F' : '#8A9CA4'),
+            metalness: 0.85,
+            roughness: 0.28,
+            transparent: dimOpacity < 1.0,
+            opacity: dimOpacity
           });
         }
       }
     });
   }, [clonedScene, highlight]);
 
-  // Subtle natural buoyancy heave and thruster pulse
+  // Controlled assembly-axis exploded view & gentle underwater float
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (!interactiveMode && groupRef.current) {
-      groupRef.current.position.y = Math.sin(t * 1.2) * 0.012;
-      groupRef.current.rotation.z = Math.sin(t * 0.8) * 0.015;
+      groupRef.current.position.y = Math.sin(t * 1.1) * 0.008;
+      groupRef.current.rotation.z = Math.sin(t * 0.7) * 0.012;
     }
 
-    if (pulsePropulsion) {
-      thrustersRef.current.forEach((mesh: any) => {
-        if (mesh.material && mesh.material.emissiveIntensity !== undefined) {
-          mesh.material.emissiveIntensity = 0.3 + Math.sin(t * 5.0) * 0.25;
-        }
-      });
-    }
+    const buoy = nodesRef.current['Buoyancy_Pods'];
+    const vThr = nodesRef.current['Vertical_Thrusters'];
+    const hThr = nodesRef.current['Horizontal_Thrusters'];
+    const fix = nodesRef.current['Propulsion_Fixtures'];
+
+    const targetBuoyY = exploded ? 0.095 : 0;
+    const targetVThrY = exploded ? -0.075 : 0;
+    const targetHThrY = exploded ? 0.055 : 0;
+    const targetFixY = exploded ? 0.045 : 0;
+
+    if (buoy) buoy.position.y = THREE.MathUtils.lerp(buoy.position.y, targetBuoyY, 0.07);
+    if (vThr) vThr.position.y = THREE.MathUtils.lerp(vThr.position.y, targetVThrY, 0.07);
+    if (hThr) hThr.position.y = THREE.MathUtils.lerp(hThr.position.y, targetHThrY, 0.07);
+    if (fix) fix.position.y = THREE.MathUtils.lerp(fix.position.y, targetFixY, 0.07);
   });
 
   return (
     <group ref={groupRef} scale={[1, 1, 1]} position={[0, 0, 0]}>
       <primitive object={clonedScene} />
+
+      {/* Explanatory Flow-Line Visualisations for Scene 3 (NOT CFD) */}
+      {showVectors && (
+        <group>
+          {/* Vertical Thrust Indicators */}
+          <Line points={[[-0.20, -0.04, 0.09], [-0.20, 0.14, 0.09]]} color="#66D4CF" lineWidth={2} />
+          <Line points={[[0.20, -0.04, 0.09], [0.20, 0.14, 0.09]]} color="#66D4CF" lineWidth={2} />
+          <Line points={[[-0.20, -0.04, -0.09], [-0.20, 0.14, -0.09]]} color="#66D4CF" lineWidth={2} />
+          <Line points={[[0.20, -0.04, -0.09], [0.20, 0.14, -0.09]]} color="#66D4CF" lineWidth={2} />
+
+          {/* Horizontal Vectored Thrust Indicators */}
+          <Line points={[[0.22, 0.02, 0.25], [0.34, 0.02, 0.37]]} color="#D98B73" lineWidth={2} />
+          <Line points={[[-0.22, 0.02, 0.25], [-0.34, 0.02, 0.37]]} color="#D98B73" lineWidth={2} />
+          <Line points={[[0.22, 0.02, -0.25], [0.34, 0.02, -0.37]]} color="#D98B73" lineWidth={2} />
+          <Line points={[[-0.22, 0.02, -0.25], [-0.34, 0.02, -0.37]]} color="#D98B73" lineWidth={2} />
+        </group>
+      )}
     </group>
   );
 }
 
-// Marine Ambient Particles
-function MarineAtmosphere() {
-  const pointsRef = useRef<THREE.Points>(null);
-  const count = 90;
-
-  const [positions] = useState(() => {
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count * 3; i += 3) {
-      pos[i] = (Math.random() - 0.5) * 4;
-      pos[i + 1] = (Math.random() - 0.5) * 3;
-      pos[i + 2] = (Math.random() - 0.5) * 4;
-    }
-    return pos;
-  });
-
-  useFrame((_, delta) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.02;
-      const arr = pointsRef.current.geometry.attributes.position.array as Float32Array;
-      for (let i = 1; i < count * 3; i += 3) {
-        arr[i] += delta * 0.05;
-        if (arr[i] > 1.8) arr[i] = -1.8;
-      }
-      pointsRef.current.geometry.attributes.position.needsUpdate = true;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.018}
-        color="#26E6D1"
-        transparent
-        opacity={0.45}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  );
-}
-
-// Camera Controller that lerps based on scene configuration
-interface CameraRigProps {
-  currentScene: SceneConfig;
-  interactiveMode: boolean;
-}
-
-function CameraRig({ currentScene, interactiveMode }: CameraRigProps) {
+function CameraRig({ currentScene, interactiveMode }: { currentScene: SceneConfig; interactiveMode: boolean }) {
   const targetCam = useRef(new THREE.Vector3(...currentScene.camPos));
   const targetLook = useRef(new THREE.Vector3(...currentScene.targetPos));
 
@@ -317,17 +282,13 @@ function CameraRig({ currentScene, interactiveMode }: CameraRigProps) {
   return null;
 }
 
-// Canvas Fallback
 function CanvasLoader() {
   return (
     <Html center>
-      <div className="flex flex-col items-center justify-center space-y-3 bg-ocean-midnight/90 backdrop-blur-md px-6 py-4 rounded-xl border border-ocean-cyan/30 text-center">
-        <div className="w-10 h-10 border-4 border-ocean-blue border-t-ocean-cyan rounded-full animate-spin"></div>
-        <div className="text-xs font-bold text-white tracking-wider">
-          LOADING AUTHENTIC CAD GEOMETRY
-        </div>
-        <div className="text-[10px] text-ocean-aqua">
-          174 precision components · 8 thrusters · 6-DOF
+      <div className="flex flex-col items-center justify-center space-y-2.5 bg-[#172832]/90 backdrop-blur-md px-5 py-4 rounded-xl border border-[#66D4CF]/30 text-center">
+        <div className="w-8 h-8 border-3 border-[#087F83] border-t-[#66D4CF] rounded-full animate-spin"></div>
+        <div className="text-[11px] font-mono font-bold text-white tracking-wider">
+          LOADING ER.STEP CAD MODEL
         </div>
       </div>
     </Html>
@@ -344,7 +305,6 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
   const activeScene = SCENES[activeSceneIndex];
   const currentHighlight = interactiveMode ? inspectHighlight : activeScene.highlight;
 
-  // Handle scroll progress across scenes
   useEffect(() => {
     if (interactiveMode) return;
 
@@ -352,12 +312,11 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const totalScrollable = containerRef.current.scrollHeight - window.innerHeight;
-      
       if (totalScrollable <= 0) return;
 
       const progress = Math.max(0, Math.min(1, -rect.top / totalScrollable));
       const sceneIdx = Math.min(SCENES.length - 1, Math.floor(progress * SCENES.length));
-      
+
       if (sceneIdx !== activeSceneIndex) {
         setActiveSceneIndex(sceneIdx);
       }
@@ -367,7 +326,6 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeSceneIndex, interactiveMode]);
 
-  // Jump to specific scene
   const jumpToScene = (idx: number) => {
     setActiveSceneIndex(idx);
     if (!containerRef.current) return;
@@ -376,9 +334,9 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
     const totalScrollable = containerRef.current.scrollHeight - window.innerHeight;
     const targetOffset = (idx / (SCENES.length - 1)) * totalScrollable;
     const topOfContainer = rect.top + scrollTop;
-    
+
     window.scrollTo({
-      top: topOfContainer + targetOffset + 5,
+      top: topOfContainer + targetOffset + 4,
       behavior: 'smooth'
     });
   };
@@ -393,11 +351,11 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
   };
 
   const componentButtons: { id: ComponentHighlight; label: string; desc: string }[] = [
-    { id: 'all', label: 'Complete Vehicle', desc: 'Holonomic 6-DOF Autonomous Platform' },
-    { id: 'propulsion', label: '8-Thruster System', desc: '4 Vectored Horizontal + 4 Vertical Fixed' },
-    { id: 'hull', label: 'Pressure Hull', desc: 'Acrylic Hull Enclosure for Flight Electronics' },
-    { id: 'frame', label: 'Structural Frame', desc: 'CNC Anodized Aluminum Skeletal Chassis' },
-    { id: 'buoyancy', label: 'Buoyancy Pods', desc: 'Dual Longitudinal Trim Balancing Tubes' }
+    { id: 'all', label: 'Complete Vehicle', desc: 'Full ER.STEP assembly (504 × 267 × 584 mm)' },
+    { id: 'propulsion', label: 'Propulsion Assembly', desc: '4 Horizontal Vectored + 4 Vertical T28 Thrusters on Angled Fixtures' },
+    { id: 'frame', label: 'Structural Frame', desc: 'CNC Side Truss Plates, Tie Rods & Mounting Cradles' },
+    { id: 'hull', label: 'Pressure Hull', desc: 'Ø114.3 mm Acrylic Pressure Hull & Internal Electronics Tray' },
+    { id: 'buoyancy', label: 'Buoyancy Pods', desc: 'Upper Longitudinal Syntactic Buoyancy Tubes' }
   ];
 
   return (
@@ -405,57 +363,50 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
       ref={containerRef} 
       id="explore"
       className="relative w-full"
-      style={{ height: interactiveMode ? '100vh' : '450vh' }}
+      style={{ height: interactiveMode ? '100vh' : '420vh' }}
     >
-      {/* Sticky Fullscreen 3D Viewport */}
-      <div className={`sticky top-0 h-screen w-full overflow-hidden bg-gradient-to-b from-[#061B2B] via-[#041624] to-[#020B12] ${
+      <div className={`sticky top-0 h-screen w-full overflow-hidden bg-gradient-to-b from-[#172832] via-[#163C4B] to-[#0F2733] ${
         isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen' : ''
       }`}>
         
-        {/* Top Control Header */}
-        <div className="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-3 pointer-events-auto">
-          {/* Brand & Mode Tag */}
-          <div className="flex items-center space-x-2 bg-ocean-midnight/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-ocean-blue/40 shadow-xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-ocean-cyan animate-pulse"></span>
-            <span className="font-heading font-black text-sm tracking-wider text-white">
-              TRITON
+        {/* Top Control Bar (positioned below sticky Navbar unless fullscreen) */}
+        <div className={`absolute ${isFullscreen ? 'top-4' : 'top-24 sm:top-28'} left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-3 pointer-events-auto`}>
+          <div className="flex items-center space-x-2.5 bg-[#172832]/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-[#66D4CF]/30 shadow-lg">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#66D4CF] animate-pulse"></span>
+            <span className="font-heading font-bold text-sm tracking-wider text-white">
+              TRITON · ER.STEP
             </span>
-            <span className="text-white/40">|</span>
-            <span className="text-xs font-semibold text-ocean-gold">
-              {interactiveMode ? '360° INSPECTION MODE' : `SCENE 0${activeScene.id + 1} OF 07`}
+            <span className="text-white/30">|</span>
+            <span className="text-xs font-mono font-semibold text-[#66D4CF]">
+              {interactiveMode ? '360° INSPECTION MODE' : `SCENE 0${activeScene.id + 1} / 07`}
             </span>
           </div>
 
-          {/* Mode Switcher & Tools */}
           <div className="flex items-center space-x-2">
-            {/* Mode Switcher Button */}
             <button
-              onClick={() => {
-                setInteractiveMode(!interactiveMode);
-              }}
+              onClick={() => setInteractiveMode(!interactiveMode)}
               className={`px-3.5 py-2 rounded-xl text-xs font-heading font-bold uppercase tracking-wider backdrop-blur-md border transition-all flex items-center space-x-2 shadow-lg ${
                 interactiveMode 
-                  ? 'bg-ocean-cyan text-ocean-deep border-ocean-cyan shadow-ocean-cyan/30' 
-                  : 'bg-ocean-midnight/90 text-white/90 border-ocean-blue/50 hover:border-ocean-cyan/60 hover:text-white'
+                  ? 'bg-[#14A9A0] text-white border-[#66D4CF]' 
+                  : 'bg-[#172832]/90 text-white border-[#66D4CF]/40 hover:border-[#66D4CF]'
               }`}
             >
               {interactiveMode ? (
                 <>
-                  <Compass className="w-3.5 h-3.5 text-ocean-deep" />
+                  <Compass className="w-3.5 h-3.5" />
                   <span>Resume Guided Tour</span>
                 </>
               ) : (
                 <>
-                  <RotateCw className="w-3.5 h-3.5 text-ocean-cyan" />
-                  <span>360° Interactive Inspection</span>
+                  <RotateCw className="w-3.5 h-3.5 text-[#66D4CF]" />
+                  <span>360° Manual Inspection</span>
                 </>
               )}
             </button>
 
-            {/* Fullscreen Button */}
             <button
               onClick={toggleFullscreen}
-              className="p-2 rounded-xl bg-ocean-midnight/90 border border-ocean-blue/50 text-white/80 hover:text-white backdrop-blur-md shadow-lg transition-colors"
+              className="p-2 rounded-xl bg-[#172832]/90 border border-white/20 text-white/80 hover:text-white backdrop-blur-md shadow-lg transition-colors"
               title={isFullscreen ? "Exit Fullscreen" : "Fullscreen View"}
             >
               {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -465,39 +416,30 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
 
         {/* 3D WebGL Canvas */}
         <Canvas
-          camera={{ position: [0.72, 0.35, 0.72], fov: 38 }}
+          dpr={[1, 2]}
+          camera={{ position: [0.85, 0.38, 0.85], fov: 38, near: 0.05, far: 50 }}
           shadows
           className={interactiveMode ? "cursor-grab active:cursor-grabbing" : "pointer-events-none"}
         >
-          <color attach="background" args={['#041421']} />
+          <color attach="background" args={['#142934']} />
           <ambientLight intensity={1.1} />
-          <directionalLight 
-            position={[4, 6, 4]} 
-            intensity={2.4} 
-            color="#EFF8FC" 
-            castShadow 
-          />
-          <directionalLight 
-            position={[-4, -3, -4]} 
-            intensity={0.9} 
-            color="#087EAB" 
-          />
-          <pointLight position={[0, 2, 0]} intensity={1.4} color="#00D4FF" />
-          <pointLight position={[0, -1.5, 0]} intensity={0.8} color="#26E6D1" />
+          <directionalLight position={[4, 6, 4]} intensity={2.3} color="#FFFFFF" castShadow />
+          <directionalLight position={[-4, -3, -4]} intensity={0.95} color="#66D4CF" />
+          <pointLight position={[0, 2.5, 0]} intensity={1.3} color="#14A9A0" />
 
           <Suspense fallback={<CanvasLoader />}>
             <Float 
-              speed={interactiveMode ? 0 : 1.1} 
-              rotationIntensity={interactiveMode ? 0 : 0.08} 
-              floatIntensity={interactiveMode ? 0 : 0.15}
+              speed={interactiveMode ? 0 : 1.0} 
+              rotationIntensity={interactiveMode ? 0 : 0.05} 
+              floatIntensity={interactiveMode ? 0 : 0.1}
             >
-              <AuthenticTritonModel 
+              <AuthenticStepModel 
                 highlight={currentHighlight} 
                 interactiveMode={interactiveMode}
-                pulsePropulsion={activeScene.id === 2 || inspectHighlight === 'propulsion'}
+                exploded={!interactiveMode && Boolean(activeScene.exploded)}
+                showVectors={!interactiveMode && Boolean(activeScene.showPropulsionVectors)}
               />
             </Float>
-            <MarineAtmosphere />
           </Suspense>
 
           <CameraRig currentScene={activeScene} interactiveMode={interactiveMode} />
@@ -507,68 +449,80 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
               enablePan={true}
               enableZoom={true}
               enableRotate={true}
-              minDistance={0.5}
-              maxDistance={3.2}
+              minDistance={0.45}
+              maxDistance={2.8}
               dampingFactor={0.06}
             />
           )}
         </Canvas>
 
-        {/* GUIDED TOUR: Narrative Text Card Overlay */}
+        {/* GUIDED TOUR: Narrative Overlay Card */}
         {!interactiveMode && (
           <div className="absolute bottom-6 left-4 right-4 sm:left-8 sm:bottom-10 max-w-xl pointer-events-auto z-20">
-            <div className="card-glass p-5 sm:p-7 rounded-2xl border border-ocean-blue/40 shadow-2xl backdrop-blur-xl space-y-3.5 bg-ocean-midnight/90 transition-all duration-300">
-              {/* Badge */}
-              <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded-md bg-ocean-blue/30 border border-ocean-cyan/30 text-[11px] font-mono text-ocean-cyan font-bold tracking-widest">
-                <span className="w-1.5 h-1.5 rounded-full bg-ocean-cyan animate-pulse"></span>
+            <div className="p-5 sm:p-7 rounded-2xl border border-[#66D4CF]/30 shadow-2xl backdrop-blur-xl space-y-3 bg-[#172832]/92">
+              <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded-md bg-[#087F83]/30 border border-[#66D4CF]/30 text-[11px] font-mono text-[#66D4CF] font-bold tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#66D4CF] animate-pulse"></span>
                 <span>{activeScene.badge}</span>
               </div>
 
-              {/* Title */}
-              <h2 className="text-2xl sm:text-3xl font-heading font-black text-white tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white tracking-tight leading-tight">
                 {activeScene.title}
               </h2>
 
-              {/* Description */}
-              <p className="text-xs sm:text-sm text-ocean-ice/80 leading-relaxed font-sans">
+              <p className="text-xs sm:text-sm text-[#E8F1F3]/85 leading-relaxed font-sans">
                 {activeScene.description}
               </p>
 
-              {/* Scene 6: YOLOv11 Edge Vision HUD Overlay */}
-              {activeScene.id === 5 && (
-                <div className="mt-3 p-3.5 rounded-xl bg-ocean-deep/90 border border-ocean-cyan/40 font-mono text-xs space-y-2">
-                  <div className="flex items-center justify-between text-[11px] text-ocean-aqua">
-                    <span className="flex items-center space-x-1.5">
-                      <Crosshair className="w-3.5 h-3.5 text-ocean-cyan animate-spin" />
-                      <span>YOLOv11s-TENSORRT ENGINE</span>
+              {/* Scene 3 Disclaimer */}
+              {activeScene.showPropulsionVectors && (
+                <div className="text-[10px] font-mono text-[#D98B73] bg-[#D98B73]/10 border border-[#D98B73]/30 px-2.5 py-1.5 rounded-lg">
+                  Explanatory Propulsion Vector Visualisation (Coral: 45° Horizontal Vectored · Aqua: Vertical Fixed) — Not a CFD Simulation.
+                </div>
+              )}
+
+              {/* Scene 5 Sensor Pills */}
+              {activeScene.sensorsList && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {activeScene.sensorsList.map((s) => (
+                    <span key={s} className="px-2 py-1 rounded bg-[#163C4B] border border-[#66D4CF]/30 text-[10px] font-mono text-[#66D4CF]">
+                      {s}
                     </span>
-                    <span className="text-green-400 font-bold">ONLINE · 30 FPS</span>
+                  ))}
+                </div>
+              )}
+
+              {/* Scene 6: YOLOv11 Demonstration Pipeline Overlay */}
+              {activeScene.id === 5 && (
+                <div className="mt-2 p-3.5 rounded-xl bg-[#0F222B] border border-[#66D4CF]/35 font-mono text-xs space-y-2">
+                  <div className="flex items-center justify-between text-[10px] text-[#66D4CF]">
+                    <span className="flex items-center space-x-1.5">
+                      <Crosshair className="w-3.5 h-3.5" />
+                      <span>DEMONSTRATION OVERLAY — ILLUSTRATIVE OUTPUT</span>
+                    </span>
+                    <span className="text-[#D98B73] font-bold">PIPELINE DEMO</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-[11px] text-white/70 pt-1 border-t border-white/10">
-                    <div>CLASSIFIER: <span className="text-white font-bold">SUBSEA GATE</span></div>
-                    <div>CONFIDENCE: <span className="text-ocean-cyan font-bold">94.8%</span></div>
-                    <div>FILTER: <span className="text-ocean-gold font-bold">CLAHE ACTIVE</span></div>
-                    <div>RANGE ESTIMATE: <span className="text-white font-bold">3.2 METERS</span></div>
+                  <div className="text-[10px] text-[#E8F1F3]/80 pt-1 border-t border-white/10">
+                    Camera Input → OpenCV (CLAHE + White Balance Correction) → YOLOv11 → Object Detection → Mission Decisions
                   </div>
                 </div>
               )}
 
-              {/* Scene 7: Final Reveal Call-to-Action Buttons */}
+              {/* Scene 7: Final CTAs */}
               {activeScene.id === 6 && (
                 <div className="flex flex-wrap items-center gap-3 pt-2">
                   <button
                     onClick={() => onNavigate('engineering')}
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-ocean-cyan to-ocean-aqua text-ocean-deep font-heading font-bold text-xs uppercase tracking-wider shadow-lg shadow-ocean-cyan/25 hover:brightness-110 transition-all flex items-center space-x-1.5"
+                    className="px-5 py-2.5 rounded-xl bg-[#14A9A0] hover:bg-[#087F83] text-white font-heading font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center space-x-1.5"
                   >
-                    <span>EXPLORE THE ENGINEERING</span>
+                    <span>EXPLORE ENGINEERING</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
 
                   <button
                     onClick={() => onNavigate('sponsorship')}
-                    className="px-5 py-2.5 rounded-xl bg-ocean-gold/20 border border-ocean-gold/60 text-ocean-gold font-heading font-bold text-xs uppercase tracking-wider hover:bg-ocean-gold hover:text-ocean-deep transition-all flex items-center space-x-1.5"
+                    className="px-5 py-2.5 rounded-xl bg-[#D98B73]/20 border border-[#D98B73]/60 text-[#D98B73] hover:bg-[#D98B73] hover:text-[#172832] font-heading font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-1.5"
                   >
-                    <span>DISCUSS SPONSORSHIP</span>
+                    <span>PARTNER WITH TRITON</span>
                     <Award className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -577,7 +531,7 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
           </div>
         )}
 
-        {/* GUIDED TOUR: Scene Progress Timeline Dots */}
+        {/* GUIDED TOUR: Timeline Dots */}
         {!interactiveMode && (
           <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-3 pointer-events-auto">
             {SCENES.map((s, idx) => (
@@ -587,14 +541,14 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
                 className="group flex items-center justify-end space-x-2 text-right"
                 title={s.title}
               >
-                <span className={`text-[10px] font-mono font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity bg-ocean-midnight/90 px-2 py-0.5 rounded border border-ocean-blue/40 text-white ${
-                  activeSceneIndex === idx ? 'opacity-100 text-ocean-cyan' : ''
+                <span className={`text-[10px] font-mono font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity bg-[#172832]/90 px-2 py-0.5 rounded border border-[#66D4CF]/30 text-white ${
+                  activeSceneIndex === idx ? 'opacity-100 text-[#66D4CF]' : ''
                 }`}>
                   {`0${idx + 1}`}
                 </span>
                 <span className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                   activeSceneIndex === idx 
-                    ? 'w-3 h-3 bg-ocean-cyan ring-4 ring-ocean-cyan/30 scale-125' 
+                    ? 'w-3 h-3 bg-[#66D4CF] ring-4 ring-[#66D4CF]/30 scale-125' 
                     : 'bg-white/30 hover:bg-white/70'
                 }`} />
               </button>
@@ -602,40 +556,43 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
           </div>
         )}
 
-        {/* GUIDED TOUR: Bottom Scroll Prompt */}
+        {/* Bottom Scroll Prompt (placed bottom-right to never overlap left scene card) */}
         {!interactiveMode && activeScene.id < 6 && (
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none opacity-70">
-            <span className="text-[10px] font-heading font-bold tracking-widest text-ocean-aqua uppercase mb-1">
+          <div className="absolute bottom-6 right-8 z-20 hidden lg:flex flex-col items-center pointer-events-none opacity-80">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-[#66D4CF] uppercase mb-1">
               SCROLL TO EXPLORE
             </span>
-            <ChevronDown className="w-4 h-4 text-ocean-cyan animate-bounce" />
+            <ChevronDown className="w-4 h-4 text-[#66D4CF] animate-bounce" />
           </div>
         )}
 
-        {/* INTERACTIVE MODE: Component Selector and Inspection Drawer */}
+        {/* INTERACTIVE INSPECTION DRAWER */}
         {interactiveMode && (
           <div className="absolute bottom-4 left-4 right-4 z-20 pointer-events-auto max-w-4xl mx-auto">
-            <div className="card-glass p-3 rounded-2xl border border-ocean-cyan/40 bg-ocean-midnight/95 backdrop-blur-xl shadow-2xl space-y-2.5">
-              <div className="flex items-center justify-between px-2">
-                <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-ocean-aqua flex items-center space-x-1.5">
-                  <Sliders className="w-3.5 h-3.5 text-ocean-cyan" />
-                  <span>SELECT COMPONENT TO ISOLATE &amp; INSPECT</span>
+            <div className="p-3.5 rounded-2xl border border-[#66D4CF]/35 bg-[#172832]/95 backdrop-blur-xl shadow-2xl space-y-2.5">
+              <div className="flex items-center justify-between px-1">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#66D4CF] flex items-center space-x-1.5">
+                  <Sliders className="w-3.5 h-3.5" />
+                  <span>ISOLATE &amp; INSPECT COMPONENT</span>
                 </span>
-                <span className="text-[10px] text-white/50 hidden sm:inline">
-                  Drag to rotate · Scroll to zoom · Right-click to pan
-                </span>
+                <button
+                  onClick={() => setInspectHighlight('all')}
+                  className="text-[10px] font-mono text-[#B9C7CC] hover:text-white flex items-center space-x-1"
+                >
+                  <RefreshCcw className="w-3 h-3" />
+                  <span>Reset Full Vehicle</span>
+                </button>
               </div>
 
-              {/* Component Buttons */}
               <div className="flex items-center space-x-1.5 overflow-x-auto no-scrollbar pb-1">
                 {componentButtons.map((btn) => (
                   <button
                     key={btn.id}
                     onClick={() => setInspectHighlight(btn.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-heading font-semibold whitespace-nowrap transition-all ${
                       inspectHighlight === btn.id
-                        ? 'bg-ocean-cyan text-ocean-deep shadow-md shadow-ocean-cyan/30 scale-105'
-                        : 'bg-ocean-blue/20 text-white/80 hover:text-white hover:bg-ocean-blue/40 border border-white/10'
+                        ? 'bg-[#14A9A0] text-white shadow-md'
+                        : 'bg-white/10 text-white/80 hover:text-white hover:bg-white/20'
                     }`}
                   >
                     {btn.label}
@@ -643,33 +600,30 @@ export const ScrollTritonTour: React.FC<ScrollTritonTourProps> = ({ onNavigate }
                 ))}
               </div>
 
-              {/* Active Component Explanation */}
-              <div className="bg-ocean-deep/80 p-3 rounded-xl border border-white/10 flex items-center justify-between text-xs">
+              <div className="bg-[#0F222B] p-3 rounded-xl border border-white/10 flex items-center justify-between text-xs">
                 <div>
-                  <span className="font-bold text-ocean-gold uppercase tracking-wider text-[11px] block">
+                  <span className="font-heading font-bold text-[#66D4CF] uppercase tracking-wider text-[11px] block">
                     {componentButtons.find(b => b.id === inspectHighlight)?.label}
                   </span>
-                  <p className="text-white/80 text-[11px] mt-0.5">
+                  <p className="text-[#E8F1F3]/80 text-[11px] mt-0.5">
                     {componentButtons.find(b => b.id === inspectHighlight)?.desc}
                   </p>
                 </div>
                 <button
                   onClick={() => {
-                    const keys: ComponentHighlight[] = ['all', 'propulsion', 'hull', 'frame', 'buoyancy'];
-                    const currentIdx = keys.indexOf(inspectHighlight);
-                    const nextKey = keys[(currentIdx + 1) % keys.length];
+                    const keys: ComponentHighlight[] = ['all', 'propulsion', 'frame', 'hull', 'buoyancy'];
+                    const nextKey = keys[(keys.indexOf(inspectHighlight) + 1) % keys.length];
                     setInspectHighlight(nextKey);
                   }}
-                  className="px-2.5 py-1 rounded-lg bg-ocean-blue/40 text-ocean-cyan hover:bg-ocean-blue/60 text-[11px] font-bold border border-ocean-cyan/30 flex items-center space-x-1"
+                  className="px-3 py-1.5 rounded-lg bg-[#087F83] text-white hover:bg-[#14A9A0] text-[11px] font-bold flex items-center space-x-1 shrink-0 ml-3"
                 >
-                  <span>Next Component</span>
+                  <span>Next</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

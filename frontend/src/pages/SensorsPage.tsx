@@ -99,13 +99,13 @@ export const SensorsPage: React.FC<SensorsPageProps> = ({ onNavigate }) => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
       {/* Title */}
       <div className="text-center space-y-3 max-w-3xl mx-auto">
-        <span className="text-xs font-bold text-ocean-gold uppercase tracking-widest">
+        <span className="text-xs font-bold text-[#D98B73] uppercase tracking-widest">
           SENSORY SUITE &amp; MULTI-MODAL PERCEPTION
         </span>
-        <h1 className="text-4xl sm:text-5xl font-heading font-black text-white">
+        <h1 className="text-4xl sm:text-5xl font-heading font-black text-[#172832]">
           SENSORS &amp; PERCEPTION
         </h1>
-        <p className="text-sm text-ocean-ice/80">
+        <p className="text-sm text-[#163C4B]">
           Inertial Navigation, Pressure Telemetry, Optical Inspection, and Acoustic Localisation
         </p>
       </div>
@@ -114,7 +114,7 @@ export const SensorsPage: React.FC<SensorsPageProps> = ({ onNavigate }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sensor List Selector */}
         <div className="space-y-2">
-          <div className="text-xs font-bold text-ocean-gold uppercase tracking-wider mb-2">
+          <div className="text-xs font-bold text-[#D98B73] uppercase tracking-wider mb-2">
             Select Marine Sensor:
           </div>
           <div className="space-y-1.5">
@@ -125,12 +125,12 @@ export const SensorsPage: React.FC<SensorsPageProps> = ({ onNavigate }) => {
                 className={`w-full text-left p-3 rounded-xl border text-xs transition-all flex items-center justify-between ${
                   selectedSensor === s.id
                     ? 'bg-ocean-cyan text-ocean-deep border-ocean-cyan font-bold shadow-lg shadow-ocean-cyan/20 scale-[1.02]'
-                    : 'bg-ocean-midnight/60 border-ocean-blue/30 text-white/80 hover:bg-ocean-blue/20'
+                    : 'bg-[#F5F8F8] border-[#B9C7CC]/70 text-[#163C4B] hover:bg-ocean-blue/20'
                 }`}
               >
                 <div>
                   <div className="font-heading font-bold">{s.name}</div>
-                  <div className={`text-[10px] ${selectedSensor === s.id ? 'text-ocean-deep/80' : 'text-ocean-aqua'}`}>
+                  <div className={`text-[10px] ${selectedSensor === s.id ? 'text-ocean-deep/80' : 'text-[#087F83]'}`}>
                     {s.model}
                   </div>
                 </div>
@@ -141,16 +141,16 @@ export const SensorsPage: React.FC<SensorsPageProps> = ({ onNavigate }) => {
         </div>
 
         {/* Selected Sensor Deep-Dive Card */}
-        <div className="lg:col-span-2 card-glass rounded-2xl p-6 sm:p-8 border border-ocean-cyan/40 shadow-2xl space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-ocean-blue/30 pb-4">
+        <div className="lg:col-span-2 card-glass rounded-2xl p-6 sm:p-8 border border-[#087F83]/40 shadow-2xl space-y-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-[#B9C7CC]/70 pb-4">
             <div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-ocean-cyan/20 text-ocean-cyan">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-ocean-cyan/20 text-[#087F83]">
                 {current.type}
               </span>
-              <h3 className="text-2xl font-heading font-bold text-white mt-1">
+              <h3 className="text-2xl font-heading font-bold text-[#172832] mt-1">
                 {current.name}
               </h3>
-              <p className="text-sm font-mono text-ocean-gold font-semibold">
+              <p className="text-sm font-mono text-[#D98B73] font-semibold">
                 Model: {current.model}
               </p>
             </div>
@@ -161,22 +161,22 @@ export const SensorsPage: React.FC<SensorsPageProps> = ({ onNavigate }) => {
 
           <div className="space-y-4">
             <div>
-              <span className="text-xs font-bold text-white uppercase tracking-wider block mb-1">
+              <span className="text-xs font-bold text-[#172832] uppercase tracking-wider block mb-1">
                 Primary Function &amp; Telemetry
               </span>
-              <p className="text-sm text-white/80 leading-relaxed bg-ocean-deep/60 p-4 rounded-xl border border-white/5">
+              <p className="text-sm text-[#163C4B] leading-relaxed bg-[#F5F8F8] p-4 rounded-xl border border-[#B9C7CC]/40">
                 {current.function}
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="bg-ocean-midnight/50 p-4 rounded-xl border border-ocean-blue/20 space-y-1">
-                <span className="text-[10px] text-ocean-ice/60 uppercase tracking-wider block">Hardware Bus Interface</span>
-                <span className="text-sm font-bold text-white font-mono">{current.bus}</span>
+              <div className="bg-[#EDF3F4]/50 p-4 rounded-xl border border-[#B9C7CC]/50 space-y-1">
+                <span className="text-[10px] text-[#172832]/60 uppercase tracking-wider block">Hardware Bus Interface</span>
+                <span className="text-sm font-bold text-[#172832] font-mono">{current.bus}</span>
               </div>
-              <div className="bg-ocean-midnight/50 p-4 rounded-xl border border-ocean-blue/20 space-y-1">
-                <span className="text-[10px] text-ocean-ice/60 uppercase tracking-wider block">Physical Hull Mount Location</span>
-                <span className="text-sm font-bold text-ocean-aqua">{current.location}</span>
+              <div className="bg-[#EDF3F4]/50 p-4 rounded-xl border border-[#B9C7CC]/50 space-y-1">
+                <span className="text-[10px] text-[#172832]/60 uppercase tracking-wider block">Physical Hull Mount Location</span>
+                <span className="text-sm font-bold text-[#087F83]">{current.location}</span>
               </div>
             </div>
           </div>
@@ -184,19 +184,19 @@ export const SensorsPage: React.FC<SensorsPageProps> = ({ onNavigate }) => {
       </div>
 
       {/* Sensor Placement Spatial Architecture */}
-      <div className="card-glass rounded-2xl p-6 sm:p-8 border border-ocean-blue/40 shadow-2xl space-y-4">
-        <h3 className="text-xl font-heading font-bold text-white">
+      <div className="card-glass rounded-2xl p-6 sm:p-8 border border-[#B9C7CC]/80 shadow-2xl space-y-4">
+        <h3 className="text-xl font-heading font-bold text-[#172832]">
           Spatial Sensor Mapping &amp; Layout
         </h3>
-        <p className="text-xs text-white/70 leading-relaxed">
+        <p className="text-xs text-[#163C4B]/85 leading-relaxed">
           Sensors are spatially separated to avoid electromagnetic interference: the high-precision RM3100 magnetometer is mounted forward, away from high-current 30A ESC busbars, while the Bar30 pressure transducer is routed through the rear end cap with direct exposure to ambient hydrostatic pressure.
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           {sensors.map((s, idx) => (
-            <div key={idx} className="bg-ocean-deep/60 p-3 rounded-lg border border-white/5 text-xs">
-              <span className="font-bold text-ocean-cyan block">{s.model}</span>
-              <span className="text-[11px] text-white/60">{s.name.split('(')[0]}</span>
+            <div key={idx} className="bg-[#F5F8F8] p-3 rounded-lg border border-[#B9C7CC]/40 text-xs">
+              <span className="font-bold text-[#087F83] block">{s.model}</span>
+              <span className="text-[11px] text-[#163C4B]/75">{s.name.split('(')[0]}</span>
             </div>
           ))}
         </div>

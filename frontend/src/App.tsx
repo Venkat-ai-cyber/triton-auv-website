@@ -35,6 +35,7 @@ export const AppContent: React.FC = () => {
       ];
       if (validPages.includes(hash)) {
         setCurrentPage(hash);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 

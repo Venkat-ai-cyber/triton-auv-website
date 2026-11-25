@@ -15,7 +15,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
       id: 'embedded',
       title: 'Embedded and Control',
       icon: Cpu,
-      color: 'border-ocean-cyan text-ocean-cyan',
+      color: 'border-ocean-cyan text-[#087F83]',
       description: 'Deterministic real-time flight stabilization, sensor fusion, and thruster motor allocation.',
       techs: [
         { name: 'Pixhawk 2.4.8 Autopilot', detail: '32-bit ARM Cortex M4 running ArduSub subsea firmware at 400 Hz' },
@@ -40,7 +40,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
       id: 'vision',
       title: 'Computer Vision & AI',
       icon: Eye,
-      color: 'border-ocean-aqua text-ocean-aqua',
+      color: 'border-ocean-aqua text-[#087F83]',
       description: 'Updated state-of-the-art YOLOv11 target detection enhanced by subsea optical preprocessing.',
       techs: [
         { name: 'YOLOv11 Object Detection', detail: 'Updated from legacy YOLOv8 Nano; optimized for qualification gate transit and seabed obstacles' },
@@ -53,7 +53,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
       id: 'sensors',
       title: 'Sensors & Perception',
       icon: Compass,
-      color: 'border-ocean-gold text-ocean-gold',
+      color: 'border-ocean-gold text-[#D98B73]',
       description: 'Multi-modal sensory perception ensuring navigation in GPS-denied underwater environments.',
       techs: [
         { name: 'ICM-20948 9-Axis IMU', detail: 'Low-noise accelerometer, gyroscope, and compass feeding EKF attitude filters' },
@@ -86,13 +86,13 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
       {/* Title */}
       <div className="text-center space-y-3 max-w-3xl mx-auto">
-        <span className="text-xs font-bold text-ocean-gold uppercase tracking-widest">
+        <span className="text-xs font-bold text-[#D98B73] uppercase tracking-widest">
           INTERCONNECTED SYSTEM ARCHITECTURE
         </span>
-        <h1 className="text-4xl sm:text-5xl font-heading font-black text-white">
+        <h1 className="text-4xl sm:text-5xl font-heading font-black text-[#172832]">
           TECHNOLOGY MATRIX
         </h1>
-        <p className="text-sm text-ocean-ice/80">
+        <p className="text-sm text-[#163C4B]">
           Integrated Embedded Control, Edge AI Computing, Optical Preprocessing, Sensors, and Mechanical Design
         </p>
 
@@ -103,7 +103,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               activeCategory === 'all'
                 ? 'bg-ocean-cyan text-ocean-deep shadow-md'
-                : 'bg-ocean-midnight/70 text-white/70 hover:text-white'
+                : 'bg-[#EDF3F4]/70 text-[#163C4B]/85 hover:text-[#172832]'
             }`}
           >
             All Pillars (5)
@@ -115,7 +115,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 activeCategory === c.id
                   ? 'bg-ocean-cyan text-ocean-deep shadow-md'
-                  : 'bg-ocean-midnight/70 text-white/70 hover:text-white'
+                  : 'bg-[#EDF3F4]/70 text-[#163C4B]/85 hover:text-[#172832]'
               }`}
             >
               {c.title}
@@ -131,18 +131,18 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
           return (
             <div 
               key={cat.id}
-              className="card-glass rounded-2xl p-6 sm:p-8 border border-ocean-blue/40 shadow-2xl space-y-6"
+              className="card-glass rounded-2xl p-6 sm:p-8 border border-[#B9C7CC]/80 shadow-2xl space-y-6"
             >
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-ocean-blue/30 pb-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-[#B9C7CC]/70 pb-4">
                 <div className="flex items-center space-x-3">
-                  <div className={`p-2.5 rounded-xl bg-ocean-midnight border ${cat.color}`}>
+                  <div className={`p-2.5 rounded-xl bg-[#EDF3F4] border ${cat.color}`}>
                     <Icon className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-heading font-bold text-white">
+                    <h3 className="text-xl font-heading font-bold text-[#172832]">
                       {cat.title}
                     </h3>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-[#163C4B]/75">
                       {cat.description}
                     </p>
                   </div>
@@ -154,13 +154,13 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
                 {cat.techs.map((t, idx) => (
                   <div 
                     key={idx}
-                    className="bg-ocean-deep/60 p-4 rounded-xl border border-white/10 hover:border-ocean-cyan/40 transition-colors"
+                    className="bg-[#F5F8F8] p-4 rounded-xl border border-[#B9C7CC]/50 hover:border-[#087F83]/40 transition-colors"
                   >
-                    <div className="flex items-center space-x-2 text-white font-bold text-sm mb-1">
-                      <CheckCircle2 className="w-4 h-4 text-ocean-cyan shrink-0" />
+                    <div className="flex items-center space-x-2 text-[#172832] font-bold text-sm mb-1">
+                      <CheckCircle2 className="w-4 h-4 text-[#087F83] shrink-0" />
                       <span>{t.name}</span>
                     </div>
-                    <p className="text-xs text-white/70 pl-6 leading-relaxed">
+                    <p className="text-xs text-[#163C4B]/85 pl-6 leading-relaxed">
                       {t.detail}
                     </p>
                   </div>
@@ -175,32 +175,32 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({ onNavigate }) =>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div 
           onClick={() => onNavigate('control')}
-          className="card-glass p-6 rounded-xl border border-ocean-blue/40 hover:border-ocean-cyan cursor-pointer transition-all flex items-center justify-between group"
+          className="card-glass p-6 rounded-xl border border-[#B9C7CC]/80 hover:border-ocean-cyan cursor-pointer transition-all flex items-center justify-between group"
         >
           <div>
-            <h4 className="font-heading font-bold text-white group-hover:text-ocean-cyan transition-colors">
+            <h4 className="font-heading font-bold text-[#172832] group-hover:text-[#087F83] transition-colors">
               Vehicle Control &amp; Autonomy Workflows
             </h4>
-            <p className="text-xs text-white/60 mt-1">
+            <p className="text-xs text-[#163C4B]/75 mt-1">
               Explore Pixhawk 2.4.8 flight loop &amp; Jetson Orin Nano MAVLink communication architecture.
             </p>
           </div>
-          <ArrowRight className="w-5 h-5 text-ocean-cyan shrink-0 ml-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-5 h-5 text-[#087F83] shrink-0 ml-4 group-hover:translate-x-1 transition-transform" />
         </div>
 
         <div 
           onClick={() => onNavigate('vision-ai')}
-          className="card-glass p-6 rounded-xl border border-ocean-blue/40 hover:border-ocean-cyan cursor-pointer transition-all flex items-center justify-between group"
+          className="card-glass p-6 rounded-xl border border-[#B9C7CC]/80 hover:border-ocean-cyan cursor-pointer transition-all flex items-center justify-between group"
         >
           <div>
-            <h4 className="font-heading font-bold text-white group-hover:text-ocean-cyan transition-colors">
+            <h4 className="font-heading font-bold text-[#172832] group-hover:text-[#087F83] transition-colors">
               YOLOv11 Vision &amp; Deep Learning Demo
             </h4>
-            <p className="text-xs text-white/60 mt-1">
+            <p className="text-xs text-[#163C4B]/75 mt-1">
               Test real underwater gate detection, CLAHE optical filters, and edge classification.
             </p>
           </div>
-          <ArrowRight className="w-5 h-5 text-ocean-cyan shrink-0 ml-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-5 h-5 text-[#087F83] shrink-0 ml-4 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
     </div>
