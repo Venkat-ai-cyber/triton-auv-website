@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageRoute } from '../types';
-import { Award, CheckCircle2, ArrowRight, Phone, MessageSquare, Shield, Cpu, Wrench } from 'lucide-react';
+import { Award, CheckCircle2, ArrowRight, Phone, MessageSquare, Send } from 'lucide-react';
 import tritonConfig from '../config/tritonConfig';
 
 interface SponsorshipPageProps {
@@ -8,6 +8,45 @@ interface SponsorshipPageProps {
 }
 
 export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    organisation: '',
+    category: 'Hardware and Component Sponsorship',
+    message: ''
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setStatusMsg(null);
+    try {
+      const res = await fetch('/api/contact/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatusMsg({ type: 'success', text: data.message });
+        setFormData({
+          name: '',
+          email: '',
+          organisation: '',
+          category: 'Hardware and Component Sponsorship',
+          message: ''
+        });
+      } else {
+        setStatusMsg({ type: 'error', text: data.message || 'Submission failed.' });
+      }
+    } catch {
+      setStatusMsg({ type: 'error', text: 'Network error connecting to local server.' });
+    } finally {
+      setSubmitting(false);
+    }
+  };
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
       {/* Hero Header */}
@@ -115,8 +154,106 @@ export const SponsorshipPage: React.FC<SponsorshipPageProps> = ({ onNavigate }) 
         </div>
       </section>
 
+      {/* Direct Sponsorship CSV Submission Form */}
+      <section className="card-glass p-6 sm:p-10 rounded-3xl border border-[#B9C7CC] space-y-6 shadow-xl">
+        <div className="border-b border-[#B9C7CC]/70 pb-4">
+          <span className="text-xs font-mono font-bold text-[#087F83] uppercase tracking-wider">
+            SPONSORSHIP SUBMISSION (STORED IN SPONSORSHIPS.CSV)
+          </span>
+          <h2 className="text-2xl font-heading font-bold text-[#172832] mt-1">
+            Submit Sponsorship Details
+          </h2>
+          <p className="text-xs text-[#163C4B]/80 pt-1">
+            All sponsorship and collaboration records are securely logged to <code className="font-mono text-[#087F83]">backend/data/sponsorships.csv</code>.
+          </p>
+        </div>
+
+        {statusMsg && (
+          <div className={`p-3.5 rounded-xl border text-xs font-medium ${
+            statusMsg.type === 'success'
+              ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
+              : 'bg-red-50 border-red-300 text-red-700'
+          }`}>
+            {statusMsg.text}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label className="text-xs font-semibold text-[#163C4B] block mb-1">Full Name *</label>
+              <input
+                type="text"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="Your Full Name"
+                className="w-full bg-[#E8F1F3] border border-[#B9C7CC] rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-[#087F83] focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-[#163C4B] block mb-1">Email Address *</label>
+              <input
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="sponsor@organisation.com"
+                className="w-full bg-[#E8F1F3] border border-[#B9C7CC] rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-[#087F83] focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-[#163C4B] block mb-1">Organisation / Company</label>
+              <input
+                type="text"
+                value={formData.organisation}
+                onChange={(e) => setFormData({ ...formData, organisation: e.target.value })}
+                placeholder="Marine Robotics Corp"
+                className="w-full bg-[#E8F1F3] border border-[#B9C7CC] rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-[#087F83] focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-[#163C4B] block mb-1">Sponsorship Category</label>
+            <select
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              className="w-full bg-[#E8F1F3] border border-[#B9C7CC] rounded-xl px-4 py-2.5 text-xs text-[#172832] focus:border-[#087F83] focus:outline-none"
+            >
+              <option value="Hardware and Component Sponsorship">Hardware and Component Sponsorship</option>
+              <option value="Financial Sponsorship">Financial Sponsorship</option>
+              <option value="Technology and Computing Support">Technology and Computing Support</option>
+              <option value="Manufacturing and Fabrication">Manufacturing and Fabrication</option>
+              <option value="Research and Technical Collaboration">Research and Technical Collaboration</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-[#163C4B] block mb-1">Sponsorship / Collaboration Details *</label>
+            <textarea
+              required
+              rows={3}
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              placeholder="Describe hardware, financial, manufacturing, or technical support details..."
+              className="w-full bg-[#E8F1F3] border border-[#B9C7CC] rounded-xl px-4 py-2.5 text-xs text-[#172832] placeholder-[#163C4B]/55 focus:border-[#087F83] focus:outline-none resize-none"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="px-7 py-3 rounded-xl bg-[#087F83] hover:bg-[#163C4B] text-white font-heading font-bold text-xs uppercase tracking-wider shadow transition-all flex items-center space-x-2 disabled:opacity-50"
+          >
+            <Send className="w-4 h-4" />
+            <span>{submitting ? 'Saving to CSV...' : 'Submit Sponsorship Details'}</span>
+          </button>
+        </form>
+      </section>
+
       {/* Main Closing Call to Action */}
-      <div className="card-glass p-8 sm:p-12 rounded-3xl border border-[#087F83]/40 bg-gradient-to-br from-ocean-midnight via-[#07253D] to-ocean-deep text-center space-y-6 shadow-2xl">
+      <div className="p-8 sm:p-12 rounded-3xl border border-[#087F83]/30 bg-[#E8F1F3] text-center space-y-6 shadow-xl">
         <h2 className="text-3xl sm:text-4xl font-heading font-black text-[#172832]">
           {tritonConfig.sponsorship.mainCta}
         </h2>

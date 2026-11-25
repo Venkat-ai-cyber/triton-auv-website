@@ -7,8 +7,10 @@ import {
   X, 
   User as UserIcon, 
   LogOut,
-  ChevronDown
+  ChevronDown,
+  QrCode
 } from 'lucide-react';
+import { QrAccessModal } from '../common/QrAccessModal';
 
 interface NavbarProps {
   currentPage: PageRoute;
@@ -19,6 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const { user, authenticated, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [techDropdownOpen, setTechDropdownOpen] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
   const navLinks: { label: string; page: PageRoute }[] = [
     { label: 'Home', page: 'home' },
@@ -147,8 +150,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
             </div>
           </nav>
 
-          {/* Auth Action Buttons */}
+          {/* Auth & QR Action Buttons */}
           <div className="hidden lg:flex items-center space-x-2 shrink-0">
+            <button
+              onClick={() => setQrOpen(true)}
+              className="px-2.5 py-1.5 rounded-lg bg-[#E8F1F3] hover:bg-[#087F83] text-[#087F83] hover:text-white border border-[#087F83]/30 text-xs font-mono font-bold transition-all flex items-center space-x-1"
+              title="Open QR Code to View on Phone"
+            >
+              <QrCode className="w-3.5 h-3.5" />
+              <span>QR</span>
+            </button>
             {authenticated && user ? (
               <div className="flex items-center space-x-2">
                 <button
@@ -190,6 +201,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
 
           {/* Mobile menu button */}
           <div className="flex xl:hidden items-center space-x-2">
+            <button
+              onClick={() => setQrOpen(true)}
+              className="p-2 rounded-lg bg-[#E8F1F3] text-[#087F83] border border-[#087F83]/30"
+              aria-label="Open QR Code"
+            >
+              <QrCode className="w-4 h-4" />
+            </button>
             {authenticated && user && (
               <button
                 onClick={() => handleNav('dashboard')}
@@ -276,6 +294,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           </div>
         </div>
       )}
+      <QrAccessModal isOpen={qrOpen} onClose={() => setQrOpen(false)} />
     </header>
   );
 };
